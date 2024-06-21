@@ -1,0 +1,293 @@
+{
+  "koridor1": {
+    "route": [
+      { "name": "Bandara Adi Sumarmo", "lat": -7.5135784, "lng": 110.7497206 },
+      {
+        "name": "SMK Adi Sumarmo",
+        "lat": -7.5301187,
+        "lng": 110.7617823
+      },
+      {
+        "name": "SMA Assalaam Sukoharjo",
+        "lat": -7.55297,
+        "lng": 110.77113
+      },
+      {
+        "name": "SMA Batik 1 Surakarta",
+        "lat": -7.5614765,
+        "lng": 110.7912401
+      },
+      {
+        "name": "SMA Al Islam 1 Surakarta",
+        "lat": -7.5744862,
+        "lng": 110.8158838
+      },
+      {
+        "name": "SMK Negeri 8 Surakarta",
+        "lat": -7.56316,
+        "lng": 110.83249
+      },
+      {
+        "name": "SMA Muhammadiyah 3 Surakarta",
+        "lat": -7.55946,
+        "lng": 110.8439
+      },
+      {
+        "name": "Universitas Sebelas Maret",
+        "lat": -7.55909,
+        "lng": 110.85669
+      },
+      {
+        "name": "SMK Warga",
+        "lat": -7.55778,
+        "lng": 110.84685
+      },
+      {
+        "name": "Sekolah Tinggi Pariwisata Sahid",
+        "lat": -7.54881,
+        "lng": 110.7851
+      },
+      {
+        "name": "MK Negeri 6 Surakarta",
+        "lat": -7.5532091,
+        "lng": 110.7991109
+      },
+      {
+        "name": "Victoria Hotel School",
+        "lat": -7.5606,
+        "lng": 110.81139
+      },
+      {
+        "name": "SMA Muhammadiyah 2 Surakarta",
+        "lat": -7.56355,
+        "lng": 110.8144
+      },
+      { "name": "SMA 17", "lat": -7.56067, "lng": 110.81677 },
+      {
+        "name": "SMA Negeri 1 Surakarta",
+        "lat": -7.55797,
+        "lng": 110.83054
+      }
+    ]
+  },
+  "koridor2": {
+    "route": [
+      { "name": "Sub Terminal Kerten", "lat": -7.560134, "lng": 110.8191 },
+      {
+        "name": "SMA Batik 1 Surakarta",
+        "lat": -7.5614765,
+        "lng": 110.7912401
+      },
+      { "name": "SMK Warga", "lat": -7.55778, "lng": 110.84685 },
+      {
+        "name": "Sekolah Tinggi Pariwisata Sahid",
+        "lat": -7.54881,
+        "lng": 110.7851
+      },
+      {
+        "name": "SMK Negeri 6 Surakarta",
+        "lat": -7.5532091,
+        "lng": 110.7991109
+      },
+      {
+        "name": "SMA Batik 1 Surakarta",
+        "lat": -7.5614765,
+        "lng": 110.7912401
+      },
+      { "name": "Victoria Hotel School", "lat": -7.5606, "lng": 110.81139 },
+      {
+        "name": "SMA Muhammadiyah 2 Surakarta",
+        "lat": -7.56355,
+        "lng": 110.8144
+      },
+      { "name": "SMA 17", "lat": -7.56067, "lng": 110.81677 },
+      { "name": "SMA Negeri 1 Surakarta", "lat": -7.55797, "lng": 110.83054 },
+      {
+        "name": "SMA Muhammadiyah 3 Surakarta",
+        "lat": -7.55946,
+        "lng": 110.8439
+      },
+      {
+        "name": "Universitas Sebelas Maret",
+        "lat": -7.55909,
+        "lng": 110.85669
+      },
+      { "name": "Terminal Palur", "lat": -7.56075, "lng": 110.81368 }
+    ]
+  },
+  "koridor3": {
+    "route": [
+      { "name": "Terminal Kartosuro", "lat": -7.54452, "lng": 110.73529 },
+      {
+        "name": "SMA Negeri 1 Kartasura",
+        "lat": -7.5530397,
+        "lng": 110.7333902
+      },
+      { "name": "Jl. Raya Solo Yogyakarta", "lat": -7.562, "lng": 110.82 },
+      {
+        "name": "SMA Batik 1 Surakarta",
+        "lat": -7.5614765,
+        "lng": 110.7912401
+      },
+      { "name": "SMA Al-Muayyad Surakarta", "lat": -7.56743, "lng": 110.8007 },
+      { "name": "SMA Negeri 7 Surakarta", "lat": -7.57673, "lng": 110.81748 },
+      {
+        "name": "MA Al-Islam Jamsaren Surakarta",
+        "lat": -7.58096,
+        "lng": 110.81564
+      },
+      {
+        "name": "SMA Muhammadiyah 2 Surakarta",
+        "lat": -7.56355,
+        "lng": 110.8144
+      },
+      {
+        "name": "SMA Batik 1 Surakarta",
+        "lat": -7.5614765,
+        "lng": 110.7912401
+      },
+      {
+        "name": "SMA Al Islam 1 Surakarta",
+        "lat": -7.5744862,
+        "lng": 110.8158838
+      },
+      { "name": "SMK Negeri 8 Surakarta", "lat": -7.56316, "lng": 110.83249 },
+      {
+        "name": "SMA Muhammadiyah 3 Surakarta",
+        "lat": -7.55946,
+        "lng": 110.8439
+      },
+      { "name": "Tugu Cembengan", "lat": -7.57231, "lng": 110.8198 }
+    ]
+  },
+  "koridor4": {
+    "route": [
+      { "name": "Terminal Kartosuro", "lat": -7.54452, "lng": 110.73529 },
+      { "name": "SMK Adi Sumarmo", "lat": -7.5301187, "lng": 110.7617823 },
+      {
+        "name": "Sekolah Tinggi Pariwisata Sahid",
+        "lat": -7.54881,
+        "lng": 110.7851
+      },
+      { "name": "SMA Negeri 4 Surakarta", "lat": -7.55567, "lng": 110.80231 },
+      {
+        "name": "SMK Negeri 6 Surakarta",
+        "lat": -7.5532091,
+        "lng": 110.7991109
+      },
+      { "name": "Terminal Tirtonadi", "lat": -7.55171, "lng": 110.81933 },
+      {
+        "name": "SMK Negeri 6 Surakarta",
+        "lat": -7.5532091,
+        "lng": 110.7991109
+      },
+      { "name": "SMK PGRI 2 Surakarta", "lat": -7.54625, "lng": 110.83077 },
+      {
+        "name": "Universitas Sebelas Maret",
+        "lat": -7.55909,
+        "lng": 110.85669
+      },
+      { "name": "Jl. KH. Maswi", "lat": -7.5614841, "lng": 110.8596341 },
+      { "name": "Terminal Palur", "lat": -7.56075, "lng": 110.81368 }
+    ]
+  },
+  "koridor5": {
+    "route": [
+      { "name": "Terminal Kartasura", "lat": -7.5530397, "lng": 110.7333902 },
+      { "name": "SMK Adi Sumarmo", "lat": -7.5301187, "lng": 110.7617823 },
+      { "name": "Colomadu", "lat": -7.55655, "lng": 110.79868 },
+      { "name": "SMK Adi Sumarmo", "lat": -7.5301187, "lng": 110.7617823 },
+      { "name": "JL Letjen. Suprapto", "lat": -7.546823, "lng": 110.804825 },
+      {
+        "name": "SMK Negeri 6 Surakarta",
+        "lat": -7.5532091,
+        "lng": 110.7991109
+      },
+      {
+        "name": "Sekolah Tinggi Pariwisata Sahid",
+        "lat": -7.54881,
+        "lng": 110.7851
+      },
+      { "name": "JL Dr Moewardi", "lat": -7.561953, "lng": 110.806744 },
+      {
+        "name": "SMA Batik 1 Surakarta",
+        "lat": -7.5614765,
+        "lng": 110.7912401
+      },
+      {
+        "name": "SMA Muhammadiyah 2 Surakarta",
+        "lat": -7.56355,
+        "lng": 110.8144
+      },
+      {
+        "name": "MA Al-Islam Jamsaren Surakarta",
+        "lat": -7.58096,
+        "lng": 110.81564
+      },
+      {
+        "name": "SMA Majlis Tafsir Al Qur'an Surakarta",
+        "lat": -7.5864015,
+        "lng": 110.8363246
+      },
+      { "name": "Sub Terminal Semanggi", "lat": -7.5866, "lng": 110.8588 },
+      {
+        "name": "SMA Majlis Tafsir Al Qur'an Surakarta",
+        "lat": -7.5864015,
+        "lng": 110.8363246
+      },
+      { "name": "Pasar Bekonang", "lat": -7.6091371, "lng": 110.8738251 },
+      {
+        "name": "SMA Negeri 1 Mojolaban",
+        "lat": -7.6026473,
+        "lng": 110.8691096
+      },
+      { "name": "Bekonang", "lat": -7.613, "lng": 110.8742 }
+    ]
+  },
+  "koridor6": {
+    "route": [
+      { "name": "Terminal Tirtonadi", "lat": -7.55171, "lng": 110.81933 },
+      {
+        "name": "SMK Negeri 6 Surakarta",
+        "lat": -7.5532091,
+        "lng": 110.7991109
+      },
+      { "name": "JL Letjen S.Parman", "lat": -7.8081287, "lng": 110.35226 },
+      { "name": "SMA 17", "lat": -7.56067, "lng": 110.81677 },
+      {
+        "name": "SMA Muhammadiyah 1 Surakarta",
+        "lat": -7.5639,
+        "lng": 110.8288
+      },
+      {
+        "name": "Akademi Seni Mangkunegaran Surakarta",
+        "lat": -7.5666437,
+        "lng": 110.8240604
+      },
+      { "name": "JL Ronggowarsito", "lat": -7.5676789, "lng": 110.8222318 },
+      { "name": "JL Diponegoro", "lat": -7.56899, "lng": 110.822168 },
+      {
+        "name": "SMA Batik 1 Surakarta",
+        "lat": -7.5614765,
+        "lng": 110.7912401
+      },
+      {
+        "name": "SMA Kristen 1 Surakarta",
+        "lat": -7.5775915,
+        "lng": 110.8153477
+      },
+      {
+        "name": "MA Al-Islam Jamsaren Surakarta",
+        "lat": -7.58096,
+        "lng": 110.81564
+      },
+      {
+        "name": "SMA Muhammadiyah 2 Surakarta",
+        "lat": -7.56355,
+        "lng": 110.8144
+      },
+      { "name": "JL Ir Soekarno", "lat": -7.6041588, "lng": 110.8157068 },
+      { "name": "Solo Baru", "lat": -7.6467, "lng": 110.762 }
+    ]
+  }
+}
