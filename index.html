@@ -4,60 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMA* Path Visualization with Sidebar</title>
+    <title>SMA* BST Route Finder</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        #mapid {
-            height: 600px;
-            float: right;
-            width: 75%;
-        }
-
-        .sidebar {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            width: 20%;
-        }
-
-        .sidebar h3 {
-            margin-top: 0;
-        }
-
-        .sidebar label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .sidebar select {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .sidebar button {
-            width: 100%;
-            padding: 8px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .node-info {
-            margin-top: 20px;
-        }
-
-        .node-info div {
-            margin-bottom: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -74,13 +25,40 @@
         <button onclick="findPath()">Find Path</button>
 
         <div class="node-info" id="nodeInfo">
-            Node Info:
+            Rute Terpendek:
         </div>
     </div>
 
     <div id="mapid"></div>
 
     <script>
+        // Function to create markers
+        function createMarker(latlng, label) {
+            return L.marker(latlng).bindPopup(label);
+        }
+
+        var map = L.map('mapid').setView([-7.55, 110.82], 13); // Centered on Surakarta
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var pathLayer = null; // To store the current path layer
+
+        // Load data from JSON file
+        $(document).ready(function () {
+            $.ajax({
+                url: 'data.json',
+                dataType: 'json',
+                success: function (data) {
+                    dataGraph = data; // Assign JSON data to Graph_nodes
+                    populateDropdowns(); // Populate dropdowns after loading JSON
+                    addNodeMarkers(); // Add markers after loading JSON
+                    visualizeShortestPaths(null);
+                }
+            })
+        })
+
         // Define graph nodes and edges
         var Graph_nodes = {
             'K1_1': [['K1_2', 2], ['K2_2', 2], ['K4_2', 2], ['K5_2', 2]],
@@ -167,113 +145,103 @@
             'K6_14': [],
         };
 
-        // Load data from JSON file
-        $.getJSON('data.json', function (data) {
-            Graph_nodes = data; // Assign JSON data to Graph_nodes
-            populateDropdowns(); // Populate dropdowns after loading JSON
-        });
-
         // Define heuristic function
         function heuristic(n) {
             // Sample heuristic function (replace with actual if needed)
             var H_dist = {
-                'K1_1': ,
-                'K1_2': ,
-                'K1_3': ,
-                'K1_4': ,
-                'K1_5': ,
-                'K1_6': ,
-                'K1_7': ,
-                'K1_8': ,
-                'K1_9': ,
-                'K1_10': ,
-                'K1_11': ,
-                'K1_12': ,
-                'K1_13': ,
-                'K1_14': ,
+                'K1_1': 2,
+                'K1_2': 2,
+                'K1_3': 2,
+                'K1_4': 2,
+                'K1_5': 2,
+                'K1_6': 2,
+                'K1_7': 2,
+                'K1_8': 2,
+                'K1_9': 2,
 
-                'K2_1': ,
-                'K2_2': ,
-                'K2_3': ,
-                'K2_4': ,
-                'K2_5': ,
-                'K2_6': ,
-                'K2_7': ,
-                'K2_8': ,
-                'K2_9': ,
-                'K2_10': ,
-                'K2_11': ,
-                'K2_12': ,
-                'K2_13': ,
+                'K2_1': 2,
+                'K2_2': 2,
+                'K2_3': 2,
+                'K2_4': 2,
+                'K2_5': 2,
+                'K2_6': 2,
+                'K2_7': 2,
+                'K2_8': 2,
+                'K2_9': 2,
+                'K2_10': 2,
+                'K2_11': 2,
+                'K2_12': 2,
+                'K2_13': 2,
 
-                'K3_1': ,
-                'K3_2': ,
-                'K3_3': ,
-                'K3_4': ,
-                'K3_5': ,
-                'K3_6': ,
-                'K3_7': ,
-                'K3_8': ,
-                'K3_9': ,
-                'K3_10': ,
-                'K3_11': ,
-                'K3_12': ,
-                'K3_13': ,
+                'K3_1': 2,
+                'K3_2': 2,
+                'K3_3': 2,
+                'K3_4': 2,
+                'K3_5': 2,
+                'K3_6': 2,
+                'K3_7': 2,
+                'K3_8': 2,
+                'K3_9': 2,
+                'K3_10': 2,
+                'K3_11': 2,
+                'K3_12': 2,
+                'K3_13': 2,
 
-                'K4_1': ,
-                'K4_2': ,
-                'K4_3': ,
-                'K4_4': ,
-                'K4_5': ,
-                'K4_6': ,
-                'K4_7': ,
-                'K4_8': ,
-                'K4_9': ,
-                'K4_10': ,
-                'K4_11': ,
+                'K4_1': 2,
+                'K4_2': 2,
+                'K4_3': 2,
+                'K4_4': 2,
+                'K4_5': 2,
+                'K4_6': 2,
+                'K4_7': 2,
+                'K4_8': 2,
+                'K4_9': 2,
+                'K4_10': 2,
+                'K4_11': 2,
 
-                'K5_1': ,
-                'K5_2': ,
-                'K5_3': ,
-                'K5_4': ,
-                'K5_5': ,
-                'K5_6': ,
-                'K5_7': ,
-                'K5_8': ,
-                'K5_9': ,
-                'K5_10': ,
-                'K5_11': ,
-                'K5_12': ,
-                'K5_13': ,
-                'K5_14': ,
-                'K5_15': ,
-                'K5_16': ,
-                'K5_17': ,
+                'K5_1': 2,
+                'K5_2': 2,
+                'K5_3': 2,
+                'K5_4': 2,
+                'K5_5': 2,
+                'K5_6': 2,
+                'K5_7': 2,
+                'K5_8': 2,
+                'K5_9': 2,
+                'K5_10': 2,
+                'K5_11': 2,
+                'K5_12': 2,
+                'K5_13': 2,
+                'K5_14': 2,
+                'K5_15': 2,
+                'K5_16': 2,
+                'K5_17': 2,
 
-                'K6_1': ,
-                'K6_2': ,
-                'K6_3': ,
-                'K6_4': ,
-                'K6_5': ,
-                'K6_6': ,
-                'K6_7': ,
-                'K6_8': ,
-                'K6_9': ,
-                'K6_10': ,
-                'K6_11': ,
-                'K6_12': ,
-                'K6_13': ,
-                'K6_14': ,
+                'K6_1': 2,
+                'K6_2': 2,
+                'K6_3': 2,
+                'K6_4': 2,
+                'K6_5': 2,
+                'K6_6': 2,
+                'K6_7': 2,
+                'K6_8': 2,
+                'K6_9': 2,
+                'K6_10': 2,
+                'K6_11': 2,
+                'K6_12': 2,
+                'K6_13': 2,
+                'K6_14': 2,
 
             };
             return H_dist[n];
         }
 
+
         // Function to find the shortest path using SMA*
-        function sma_star(start, goal, max_depth = 1000) {
+        function sma_star(start, goal, max_depth = 17) {
             var open_set = [{ name: start, g: 0, h: heuristic(start), f: heuristic(start), parent: null }];
             var closed_set = new Set();
-            var max_open_size = 10; // Limit size of open set
+            var max_open_size = 6; // Limit size of open set
 
             while (open_set.length > 0) {
                 open_set.sort((a, b) => a.f - b.f);
@@ -334,50 +302,68 @@
             var startSelect = document.getElementById('startNode');
             var goalSelect = document.getElementById('goalNode');
 
-            Object.keys(Graph_nodes).forEach(node => {
-                var option = document.createElement('option');
-                option.value = node;
-                option.textContent = node;
-                startSelect.appendChild(option.cloneNode(true));
-                goalSelect.appendChild(option.cloneNode(true));
+            // Set untuk menyimpan nama-nama rute yang sudah ditambahkan
+            var addedRoutes = new Set();
+            // Iterate through each koridor
+            Object.keys(dataGraph).forEach(koridor => {
+                // Iterate through each route in the current koridor
+                dataGraph[koridor].route.forEach(route => {
+                    // Memeriksa apakah nama rute sudah ditambahkan ke dropdown
+                    if (!addedRoutes.has(route.name)) {
+                        var option = document.createElement('option');
+                        option.value = route.id;
+                        option.textContent = route.name;
+                        startSelect.appendChild(option.cloneNode(true));
+                        goalSelect.appendChild(option.cloneNode(true));
+                        addedRoutes.add(route.name); // Menambahkan nama rute ke set
+                    }
+                });
             });
         }
+
 
         // Function to create markers for nodes
         function addNodeMarkers() {
-            Object.keys(Graph_nodes).forEach(node => {
-                var latLng = [Graph_nodes[node].lat, Graph_nodes[node].lng];
-                var marker = L.marker(latLng).addTo(map);
-                marker.bindPopup(Graph_nodes[node].name);
+            Object.keys(dataGraph).forEach(koridor => {
+                dataGraph[koridor].route.forEach(route => {
+                    var latLng = [route.lat, route.lng];
+                    var marker = L.marker(latLng).addTo(map);
+                    marker.bindPopup(route.name);
+                });
             });
         }
 
-        // Function to create markers
-        function createMarker(latlng, label) {
-            return L.marker(latlng).bindPopup(label);
-        }
-
-        var map = L.map('mapid').setView([-7.55, 110.82], 13); // Centered on Surakarta
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        var pathLayer = null; // To store the current path layer
-
         // Function to visualize the shortest path
-        function visualizePath(path) {
+        function visualizeShortestPaths(path) {
+            if (path === null) {
+                alert("Path not found!");
+                console.log("Path does not exist!");
+                if (pathLayer !== null) {
+                    map.removeLayer(pathLayer); // Remove the current path layer if it exists
+                }
+                return;
+            }
+
             if (pathLayer !== null) {
                 map.removeLayer(pathLayer); // Remove the current path layer if it exists
             }
 
             var latLngs = [];
             var markers = [];
+            var routeDetails = []; // Array to store route details for the sidebar
 
             path.forEach(node => {
-                var latLng = [Graph_nodes[node].lat, Graph_nodes[node].lng];
-                latLngs.push(latLng);
-                markers.push(createMarker(latLng, `${Graph_nodes[node].name} (${node})`));
+                Object.keys(dataGraph).forEach(koridor => {
+                    // Iterate through each route in the current koridor
+                    dataGraph[koridor].route.forEach(route => {
+                        if (route.id == node) {
+                            var latLng = [route.lat, route.lng];
+                            latLngs.push(latLng);
+                            markers.push(createMarker(latLng, route.name));
+                            routeDetails.push({ id: route.id, name: route.name }); // Store route details
+                        }
+                    });
+                });
             });
 
             pathLayer = L.polyline(latLngs, { color: 'red' }).addTo(map);
@@ -388,13 +374,13 @@
 
             map.fitBounds(pathLayer.getBounds()); // Fit map to bounds of the path
 
-            // Update node info in the sidebar
+            // Update Rute Terpendek in the sidebar
             var nodeInfoDiv = document.getElementById('nodeInfo');
-            nodeInfoDiv.innerHTML = '<strong>Node Info:</strong>';
-            path.forEach(node => {
-                var nodeLabel = document.createElement('div');
-                nodeLabel.textContent = `${Graph_nodes[node].name} (${node})`;
-                nodeInfoDiv.appendChild(nodeLabel);
+            nodeInfoDiv.innerHTML = '<strong>Rute Terpendek:</strong>';
+            routeDetails.forEach(route => {
+                var routeLabel = document.createElement('div');
+                routeLabel.textContent = `ID: ${route.id}, Name: ${route.name}`;
+                nodeInfoDiv.appendChild(routeLabel);
             });
         }
 
@@ -415,7 +401,7 @@
             var path = sma_star(startNode, goalNode);
             if (path !== null) {
                 console.log("Path found:", path);
-                visualizePath(path);
+                visualizeShortestPaths(path);
             } else {
                 alert("Path not found!");
                 console.log("Path does not exist!");
@@ -424,9 +410,6 @@
                 }
             }
         }
-
-        // Add node markers when the page loads
-        addNodeMarkers();
     </script>
 </body>
 

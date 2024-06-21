@@ -1,0 +1,48 @@
+#mapid {
+  height: 600px;
+  float: right;
+  width: 75%;
+}
+
+.sidebar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 22%;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+}
+
+.sidebar label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.sidebar select {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.sidebar button {
+  width: 100%;
+  padding: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.node-info {
+  margin-top: 20px;
+}
+
+.node-info div {
+  margin-bottom: 5px;
+}
