@@ -37,37 +37,7 @@
         "lat": -7.55909,
         "lng": 110.85669
       },
-      {
-        "name": "SMK Warga",
-        "lat": -7.55778,
-        "lng": 110.84685
-      },
-      {
-        "name": "Sekolah Tinggi Pariwisata Sahid",
-        "lat": -7.54881,
-        "lng": 110.7851
-      },
-      {
-        "name": "MK Negeri 6 Surakarta",
-        "lat": -7.5532091,
-        "lng": 110.7991109
-      },
-      {
-        "name": "Victoria Hotel School",
-        "lat": -7.5606,
-        "lng": 110.81139
-      },
-      {
-        "name": "SMA Muhammadiyah 2 Surakarta",
-        "lat": -7.56355,
-        "lng": 110.8144
-      },
-      { "name": "SMA 17", "lat": -7.56067, "lng": 110.81677 },
-      {
-        "name": "SMA Negeri 1 Surakarta",
-        "lat": -7.55797,
-        "lng": 110.83054
-      }
+      { "name": "Terminal Palur", "lat": -7.56075, "lng": 110.81368 }
     ]
   },
   "koridor2": {
