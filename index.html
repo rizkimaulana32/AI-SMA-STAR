@@ -290,6 +290,17 @@
             }
         }
 
+        const koridorColors = {
+            'K1': 'red',
+            'K2': 'blue',
+            'K3': 'green',
+            'K4': 'purple',
+            'K5': 'black',
+            'K6': 'magenta',
+        };
+
+        var pathLayer = null;
+
         // Function to visualize the shortest path
         function visualizeShortestPaths(path) {
             if (path === null || path.length === 0) {
@@ -304,53 +315,45 @@
                 map.removeLayer(pathLayer); // Remove the current path layer if it exists
             }
 
-            var latLngs = [];
-            var markers = [];
             var routeDetails = []; // Array to store route details for the sidebar
+            var segments = []; // Array to store the segments of the path with their respective colors
 
-            // Get the start state (node)
-            var startNodeId = path[0];
-            var startNode = dataGraph.routes.find(route => route.id === startNodeId);
-            if (startNode) {
-                var startLatLng = [startNode.lat, startNode.lng];
-                latLngs.push(startLatLng);
-                markers.push(L.marker(startLatLng).bindPopup(startNode.name));
-                routeDetails.push({ id: startNode.id, name: startNode.name, koridor: startNode.koridor.join(", ") });
+            for (let i = 0; i < path.length - 1; i++) {
+                var startNodeId = path[i];
+                var endNodeId = path[i + 1];
+
+                var startNode = dataGraph.routes.find(route => route.id === startNodeId);
+                var endNode = dataGraph.routes.find(route => route.id === endNodeId);
+
+                if (startNode && endNode) {
+                    var latLngs = [[startNode.lat, startNode.lng], [endNode.lat, endNode.lng]];
+
+                    // Determine the color based on the corridor transition
+                    var startCorridor = startNode.koridor[0];
+                    var endCorridor = endNode.koridor[0];
+                    var color;
+
+                    if (startCorridor === endCorridor) {
+                        color = koridorColors[startCorridor] || 'black'; // Same corridor
+                    } else {
+                        color = koridorColors[endCorridor] || 'black'; // Transition to new corridor
+                    }
+
+                    segments.push({ latLngs: latLngs, color: color });
+
+                    routeDetails.push({ id: startNode.id, name: startNode.name, koridor: startNode.koridor.join(", ") });
+                    routeDetails.push({ id: endNode.id, name: endNode.name, koridor: endNode.koridor.join(", ") });
+                }
             }
 
-            // Get the next state (node) in the path
-            var nextStateIndex = 1; // Assuming path[0] is the current state, so we start with index 1 for the next state
-            var nextNodeId = path[nextStateIndex];
+            // Draw each segment with the appropriate color
+            pathLayer = L.layerGroup(segments.map(segment => L.polyline(segment.latLngs, { color: segment.color })));
 
-            path.forEach((nodeId, index) => {
-                var node = dataGraph.routes.find(route => route.id === nodeId);
-                if (node) {
-                    var latLng = [node.lat, node.lng];
-                    latLngs.push(latLng);
-                    markers.push(L.marker(latLng).bindPopup(node.name));
+            // Add the layer group to the map
+            pathLayer.addTo(map);
 
-                    // Check if this node is the next state in the path
-                    if (nodeId === nextNodeId) {
-                        var nextNode = dataGraph.routes.find(route => route.id === nextNodeId);
-                        if (nextNode) {
-                            // Filter corridors that are present in both current node and next node
-                            var koridorToDisplay = node.koridor.filter(koridor => nextNode.koridor.includes(koridor)).join(", ");
-                            routeDetails.push({ id: node.id, name: node.name, koridor: koridorToDisplay });
-                        }
+            map.fitBounds(L.polyline(segments.flatMap(segment => segment.latLngs)).getBounds()); // Fit map to bounds of the path
 
-                        nextStateIndex++; // Move to the next expected state in the path
-                        nextNodeId = path[nextStateIndex]; // Update the nextNodeId to the next expected state
-                    }
-                }
-            });
-
-            pathLayer = L.polyline(latLngs, { color: 'red' }).addTo(map);
-
-            markers.forEach(marker => {
-                marker.addTo(map);
-            });
-
-            map.fitBounds(pathLayer.getBounds()); // Fit map to bounds of the path
 
             // Update Rute Terpendek in the sidebar
             var nodeInfoDiv = document.getElementById('nodeInfo');
