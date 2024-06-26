@@ -50,7 +50,7 @@
         // Load data from JSON file
         $(document).ready(function () {
             $.ajax({
-                url: 'baru.json',
+                url: 'data.json',
                 dataType: 'json',
                 success: function (data) {
                     dataGraph = data; // Assign JSON data to dataGraph
@@ -169,7 +169,7 @@
         function sma_star(start, goal, max_depth = 1000) {
             var open_set = [{ name: start, g: 0, h: heuristic(start), f: heuristic(start), parent: null }];
             var closed_set = new Set();
-            var max_open_size = 20; // Limit size of open set
+            var max_open_size = 30; // Limit size of open set
 
             while (open_set.length > 0) {
                 open_set.sort((a, b) => a.f - b.f);
@@ -292,8 +292,8 @@
 
         // Function to visualize the shortest path
         function visualizeShortestPaths(path) {
-            if (path === null) {
-                console.log("Path does not exist!");
+            if (path === null || path.length === 0) {
+                console.log("Path does not exist or is empty!");
                 if (pathLayer !== null) {
                     map.removeLayer(pathLayer); // Remove the current path layer if it exists
                 }
@@ -308,13 +308,39 @@
             var markers = [];
             var routeDetails = []; // Array to store route details for the sidebar
 
-            path.forEach(nodeId => {
+            // Get the start state (node)
+            var startNodeId = path[0];
+            var startNode = dataGraph.routes.find(route => route.id === startNodeId);
+            if (startNode) {
+                var startLatLng = [startNode.lat, startNode.lng];
+                latLngs.push(startLatLng);
+                markers.push(L.marker(startLatLng).bindPopup(startNode.name));
+                routeDetails.push({ id: startNode.id, name: startNode.name, koridor: startNode.koridor.join(", ") });
+            }
+
+            // Get the next state (node) in the path
+            var nextStateIndex = 1; // Assuming path[0] is the current state, so we start with index 1 for the next state
+            var nextNodeId = path[nextStateIndex];
+
+            path.forEach((nodeId, index) => {
                 var node = dataGraph.routes.find(route => route.id === nodeId);
                 if (node) {
                     var latLng = [node.lat, node.lng];
                     latLngs.push(latLng);
                     markers.push(L.marker(latLng).bindPopup(node.name));
-                    routeDetails.push({ id: node.id, name: node.name, koridor: node.koridor.join(", ") }); // Store route details
+
+                    // Check if this node is the next state in the path
+                    if (nodeId === nextNodeId) {
+                        var nextNode = dataGraph.routes.find(route => route.id === nextNodeId);
+                        if (nextNode) {
+                            // Filter corridors that are present in both current node and next node
+                            var koridorToDisplay = node.koridor.filter(koridor => nextNode.koridor.includes(koridor)).join(", ");
+                            routeDetails.push({ id: node.id, name: node.name, koridor: koridorToDisplay });
+                        }
+
+                        nextStateIndex++; // Move to the next expected state in the path
+                        nextNodeId = path[nextStateIndex]; // Update the nextNodeId to the next expected state
+                    }
                 }
             });
 
@@ -329,7 +355,8 @@
             // Update Rute Terpendek in the sidebar
             var nodeInfoDiv = document.getElementById('nodeInfo');
             nodeInfoDiv.innerHTML = '<strong>Rute Terpendek:</strong>';
-            routeDetails.forEach(route => {
+
+            routeDetails.forEach((route, index) => {
                 var routeLabel = document.createElement('div');
                 routeLabel.textContent = `ID: ${route.id}, Name: ${route.name}, Koridor: ${route.koridor}`;
                 nodeInfoDiv.appendChild(routeLabel);
