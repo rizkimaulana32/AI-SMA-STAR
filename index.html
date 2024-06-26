@@ -29,22 +29,10 @@
         </div>
     </div>
 
-    <div class="toggle-btn" id="toggleBtn"><span>&#9664;</span></div>
-        
+
     <div id="mapid"></div>
 
     <script>
-        document.getElementById('toggleBtn').addEventListener('click', function () {
-            var sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('hidden');
-
-            var toggleBtnIcon = document.querySelector('.toggle-btn span');
-            if (sidebar.classList.contains('hidden')) {
-                toggleBtnIcon.innerHTML = '&#9654;';
-            } else {
-                toggleBtnIcon.innerHTML = '&#9664;';
-            }
-        });
         // Function to create markers
         function createMarker(latlng, label) {
             return L.marker(latlng).bindPopup(label);
