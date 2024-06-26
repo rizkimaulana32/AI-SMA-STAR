@@ -1,446 +1,312 @@
 {
-  "koridor1": {
-    "route": [
-      {
-        "id": "K1_1",
-        "name": "Bandara Adi Sumarmo",
-        "lat": -7.5135784,
-        "lng": 110.7497206
-      },
-      {
-        "id": "K1_2",
-        "name": "SMK Adi Sumarmo",
-        "lat": -7.5301187,
-        "lng": 110.7617823
-      },
-      {
-        "id": "K1_3",
-        "name": "SMA Assalaam Sukoharjo",
-        "lat": -7.55297,
-        "lng": 110.77113
-      },
-      {
-        "id": "K1_4",
-        "name": "SMA Batik 1 Surakarta",
-        "lat": -7.5614765,
-        "lng": 110.7912401
-      },
-      {
-        "id": "K1_5",
-        "name": "SMA Al Islam 1 Surakarta",
-        "lat": -7.5744862,
-        "lng": 110.8158838
-      },
-      {
-        "id": "K1_6",
-        "name": "SMK Negeri 8 Surakarta",
-        "lat": -7.56316,
-        "lng": 110.83249
-      },
-      {
-        "id": "K1_7",
-        "name": "SMA Muhammadiyah 3 Surakarta",
-        "lat": -7.55946,
-        "lng": 110.8439
-      },
-      {
-        "id": "K1_8",
-        "name": "Universitas Sebelas Maret",
-        "lat": -7.55909,
-        "lng": 110.85669
-      },
-      {
-        "id": "K1_9",
-        "name": "Terminal Palur",
-        "lat": -7.56075,
-        "lng": 110.81368
-      }
-    ]
-  },
-  "koridor2": {
-    "route": [
-      {
-        "id": "K2_1",
-        "name": "Sub Terminal Kerten",
-        "lat": -7.560134,
-        "lng": 110.8191
-      },
-      {
-        "id": "K2_2",
-        "name": "SMA Batik 1 Surakarta",
-        "lat": -7.5614765,
-        "lng": 110.7912401
-      },
-      { "id": "K2_3", "name": "SMK Warga", "lat": -7.55778, "lng": 110.84685 },
-      {
-        "id": "K2_4",
-        "name": "Sekolah Tinggi Pariwisata Sahid",
-        "lat": -7.54881,
-        "lng": 110.7851
-      },
-      {
-        "id": "K2_5",
-        "name": "SMK Negeri 6 Surakarta",
-        "lat": -7.5532091,
-        "lng": 110.7991109
-      },
-      {
-        "id": "K2_6",
-        "name": "Victoria Hotel School",
-        "lat": -7.5606,
-        "lng": 110.81139
-      },
-      {
-        "id": "K2_7",
-        "name": "SMA Muhammadiyah 2 Surakarta",
-        "lat": -7.56355,
-        "lng": 110.8144
-      },
-      { "id": "K2_8", "name": "SMA 17", "lat": -7.56067, "lng": 110.81677 },
-      {
-        "id": "K2_9",
-        "name": "SMA Negeri 1 Surakarta",
-        "lat": -7.55797,
-        "lng": 110.83054
-      },
-      {
-        "id": "K2_10",
-        "name": "SMA Muhammadiyah 3 Surakarta",
-        "lat": -7.55946,
-        "lng": 110.8439
-      },
-      {
-        "id": "K2_11",
-        "name": "Universitas Sebelas Maret",
-        "lat": -7.55909,
-        "lng": 110.85669
-      },
-      {
-        "id": "K2_12",
-        "name": "Terminal Palur",
-        "lat": -7.56075,
-        "lng": 110.81368
-      }
-    ]
-  },
-  "koridor3": {
-    "route": [
-      {
-        "id": "K3_1",
-        "name": "Terminal Kartosuro",
-        "lat": -7.54452,
-        "lng": 110.73529
-      },
-      {
-        "id": "K3_2",
-        "name": "SMA Negeri 1 Kartasura",
-        "lat": -7.5530397,
-        "lng": 110.7333902
-      },
-      {
-        "id": "K3_3",
-        "name": "Jl. Raya Solo Yogyakarta",
-        "lat": -7.562,
-        "lng": 110.82
-      },
-      {
-        "id": "K3_4",
-        "name": "SMA Batik 1 Surakarta",
-        "lat": -7.5614765,
-        "lng": 110.7912401
-      },
-      {
-        "id": "K3_5",
-        "name": "SMA Al-Muayyad Surakarta",
-        "lat": -7.56743,
-        "lng": 110.8007
-      },
-      {
-        "id": "K3_6",
-        "name": "SMA Negeri 7 Surakarta",
-        "lat": -7.57673,
-        "lng": 110.81748
-      },
-      {
-        "id": "K3_7",
-        "name": "MA Al-Islam Jamsaren Surakarta",
-        "lat": -7.58096,
-        "lng": 110.81564
-      },
-      {
-        "id": "K3_8",
-        "name": "SMA Muhammadiyah 2 Surakarta",
-        "lat": -7.56355,
-        "lng": 110.8144
-      },
-      {
-        "id": "K3_9",
-        "name": "SMA Al Islam 1 Surakarta",
-        "lat": -7.5744862,
-        "lng": 110.8158838
-      },
-      {
-        "id": "K3_10",
-        "name": "SMK Negeri 8 Surakarta",
-        "lat": -7.56316,
-        "lng": 110.83249
-      },
-      {
-        "id": "K3_11",
-        "name": "SMA Muhammadiyah 3 Surakarta",
-        "lat": -7.55946,
-        "lng": 110.8439
-      },
-      {
-        "id": "K3_12",
-        "name": "Tugu Cembengan",
-        "lat": -7.57231,
-        "lng": 110.8198
-      }
-    ]
-  },
-  "koridor4": {
-    "route": [
-      {
-        "id": "K4_1",
-        "name": "Terminal Kartosuro",
-        "lat": -7.54452,
-        "lng": 110.73529
-      },
-      {
-        "id": "K4_2",
-        "name": "SMK Adi Sumarmo",
-        "lat": -7.5301187,
-        "lng": 110.7617823
-      },
-      {
-        "id": "K4_3",
-        "name": "Sekolah Tinggi Pariwisata Sahid",
-        "lat": -7.54881,
-        "lng": 110.7851
-      },
-      {
-        "id": "K4_4",
-        "name": "SMA Negeri 4 Surakarta",
-        "lat": -7.55567,
-        "lng": 110.80231
-      },
-      {
-        "id": "K4_5",
-        "name": "SMK Negeri 6 Surakarta",
-        "lat": -7.5532091,
-        "lng": 110.7991109
-      },
-      {
-        "id": "K4_6",
-        "name": "Terminal Tirtonadi",
-        "lat": -7.55171,
-        "lng": 110.81933
-      },
-      {
-        "id": "K4_7",
-        "name": "SMK Negeri 6 Surakarta",
-        "lat": -7.5532091,
-        "lng": 110.7991109
-      },
-      {
-        "id": "K4_8",
-        "name": "SMK PGRI 2 Surakarta",
-        "lat": -7.54625,
-        "lng": 110.83077
-      },
-      {
-        "id": "K4_9",
-        "name": "Universitas Sebelas Maret",
-        "lat": -7.55909,
-        "lng": 110.85669
-      },
-      {
-        "id": "K4_10",
-        "name": "Jl. KH. Maswi",
-        "lat": -7.5614841,
-        "lng": 110.8596341
-      },
-      {
-        "id": "K4_11",
-        "name": "Terminal Palur",
-        "lat": -7.56075,
-        "lng": 110.81368
-      }
-    ]
-  },
-  "koridor5": {
-    "route": [
-      {
-        "id": "K5_1",
-        "name": "Terminal Kartasura",
-        "lat": -7.5530397,
-        "lng": 110.7333902
-      },
-      {
-        "id": "K5_2",
-        "name": "SMK Adi Sumarmo",
-        "lat": -7.5301187,
-        "lng": 110.7617823
-      },
-      { "id": "K5_3", "name": "Colomadu", "lat": -7.55655, "lng": 110.79868 },
-      {
-        "id": "K5_4",
-        "name": "SMK Adi Sumarmo",
-        "lat": -7.5301187,
-        "lng": 110.7617823
-      },
-      {
-        "id": "K5_5",
-        "name": "JL Letjen. Suprapto",
-        "lat": -7.546823,
-        "lng": 110.804825
-      },
-      {
-        "id": "K5_6",
-        "name": "SMK Negeri 6 Surakarta",
-        "lat": -7.5532091,
-        "lng": 110.7991109
-      },
-      {
-        "id": "K5_7",
-        "name": "Sekolah Tinggi Pariwisata Sahid",
-        "lat": -7.54881,
-        "lng": 110.7851
-      },
-      {
-        "id": "K5_8",
-        "name": "JL Dr Moewardi",
-        "lat": -7.561953,
-        "lng": 110.806744
-      },
-      {
-        "id": "K5_9",
-        "name": "SMA Batik 1 Surakarta",
-        "lat": -7.5614765,
-        "lng": 110.7912401
-      },
-      {
-        "id": "K5_10",
-        "name": "SMA Muhammadiyah 2 Surakarta",
-        "lat": -7.56355,
-        "lng": 110.8144
-      },
-      {
-        "id": "K5_11",
-        "name": "MA Al-Islam Jamsaren Surakarta",
-        "lat": -7.58096,
-        "lng": 110.81564
-      },
-      {
-        "id": "K5_12",
-        "name": "SMA Majlis Tafsir Al Qur'an Surakarta",
-        "lat": -7.5864015,
-        "lng": 110.8363246
-      },
-      {
-        "id": "K5_13",
-        "name": "Sub Terminal Semanggi",
-        "lat": -7.5866,
-        "lng": 110.8588
-      },
-      {
-        "id": "K5_14",
-        "name": "SMA Majlis Tafsir Al Qur'an Surakarta",
-        "lat": -7.5864015,
-        "lng": 110.8363246
-      },
-      {
-        "id": "K5_15",
-        "name": "Pasar Bekonang",
-        "lat": -7.6091371,
-        "lng": 110.8738251
-      },
-      {
-        "id": "K5_16",
-        "name": "SMA Negeri 1 Mojolaban",
-        "lat": -7.6026473,
-        "lng": 110.8691096
-      },
-      { "id": "K5_17", "name": "Bekonang", "lat": -7.613, "lng": 110.8742 }
-    ]
-  },
-  "koridor6": {
-    "route": [
-      {
-        "id": "K6_1",
-        "name": "Terminal Tirtonadi",
-        "lat": -7.55171,
-        "lng": 110.81933
-      },
-      {
-        "id": "K6_2",
-        "name": "SMK Negeri 6 Surakarta",
-        "lat": -7.5532091,
-        "lng": 110.7991109
-      },
-      {
-        "id": "K6_3",
-        "name": "JL Letjen S.Parman",
-        "lat": -7.8081287,
-        "lng": 110.35226
-      },
-      { "id": "K6_4", "name": "SMA 17", "lat": -7.56067, "lng": 110.81677 },
-      {
-        "id": "K6_5",
-        "name": "SMA Muhammadiyah 1 Surakarta",
-        "lat": -7.5639,
-        "lng": 110.8288
-      },
-      {
-        "id": "K6_6",
-        "name": "Akademi Seni Mangkunegaran Surakarta",
-        "lat": -7.5666437,
-        "lng": 110.8240604
-      },
-      {
-        "id": "K6_7",
-        "name": "JL Ronggowarsito",
-        "lat": -7.5676789,
-        "lng": 110.8222318
-      },
-      {
-        "id": "K6_8",
-        "name": "JL Diponegoro",
-        "lat": -7.56899,
-        "lng": 110.822168
-      },
-      {
-        "id": "K6_9",
-        "name": "SMA Batik 1 Surakarta",
-        "lat": -7.5614765,
-        "lng": 110.7912401
-      },
-      {
-        "id": "K6_10",
-        "name": "SMA Kristen 1 Surakarta",
-        "lat": -7.5775915,
-        "lng": 110.8153477
-      },
-      {
-        "id": "K6_11",
-        "name": "MA Al-Islam Jamsaren Surakarta",
-        "lat": -7.58096,
-        "lng": 110.81564
-      },
-      {
-        "id": "K6_12",
-        "name": "SMA Muhammadiyah 2 Surakarta",
-        "lat": -7.56355,
-        "lng": 110.8144
-      },
-      {
-        "id": "K6_13",
-        "name": "JL Ir Soekarno",
-        "lat": -7.6041588,
-        "lng": 110.8157068
-      },
-      { "id": "K6_14", "name": "Solo Baru", "lat": -7.6467, "lng": 110.762 }
-    ]
-  }
+  "routes": [
+    {
+      "id": "A",
+      "name": "Bandara Adi Sumarmo",
+      "lat": -7.5135784,
+      "lng": 110.7497206,
+      "koridor": ["K1"]
+    },
+    {
+      "id": "B",
+      "name": "SMK Adi Sumarmo",
+      "lat": -7.5301187,
+      "lng": 110.7617823,
+      "koridor": ["K1", "K4", "K5"]
+    },
+    {
+      "id": "C",
+      "name": "SMA Assalaam Sukoharjo",
+      "lat": -7.55297,
+      "lng": 110.77113,
+      "koridor": ["K1"]
+    },
+    {
+      "id": "D",
+      "name": "SMA Batik 1 Surakarta",
+      "lat": -7.5614765,
+      "lng": 110.7912401,
+      "koridor": ["K1", "K2", "K3", "K5", "K6"]
+    },
+    {
+      "id": "E",
+      "name": "SMA Al Islam 1 Surakarta",
+      "lat": -7.5744862,
+      "lng": 110.8158838,
+      "koridor": ["K1", "K3"]
+    },
+    {
+      "id": "F",
+      "name": "SMK Negeri 8 Surakarta",
+      "lat": -7.56316,
+      "lng": 110.83249,
+      "koridor": ["K1", "K3"]
+    },
+    {
+      "id": "G",
+      "name": "SMA Muhammadiyah 3 Surakarta",
+      "lat": -7.55946,
+      "lng": 110.8439,
+      "koridor": ["K1", "K2", "K3"]
+    },
+    {
+      "id": "H",
+      "name": "Universitas Sebelas Maret",
+      "lat": -7.55909,
+      "lng": 110.85669,
+      "koridor": ["K1", "K2", "K4"]
+    },
+    {
+      "id": "I",
+      "name": "Terminal Palur",
+      "lat": -7.56075,
+      "lng": 110.81368,
+      "koridor": ["K1", "K2", "K4"]
+    },
+    {
+      "id": "J",
+      "name": "Sub Terminal Kerten",
+      "lat": -7.560134,
+      "lng": 110.8191,
+      "koridor": ["K2"]
+    },
+    {
+      "id": "K",
+      "name": "SMK Warga",
+      "lat": -7.55778,
+      "lng": 110.84685,
+      "koridor": ["K2"]
+    },
+    {
+      "id": "L",
+      "name": "Sekolah Tinggi Pariwisata Sahid",
+      "lat": -7.54881,
+      "lng": 110.7851,
+      "koridor": ["K2", "K4", "K5"]
+    },
+    {
+      "id": "M",
+      "name": "SMK Negeri 6 Surakarta",
+      "lat": -7.5532091,
+      "lng": 110.7991109,
+      "koridor": ["K2", "K4", "K5", "K6"]
+    },
+    {
+      "id": "N",
+      "name": "Victoria Hotel School",
+      "lat": -7.5606,
+      "lng": 110.81139,
+      "koridor": ["K2"]
+    },
+    {
+      "id": "O",
+      "name": "SMA Muhammadiyah 2 Surakarta",
+      "lat": -7.56355,
+      "lng": 110.8144,
+      "koridor": ["K2", "K3", "K5", "K6"]
+    },
+    {
+      "id": "P",
+      "name": "SMA 17",
+      "lat": -7.56067,
+      "lng": 110.81677,
+      "koridor": ["K2", "K6"]
+    },
+    {
+      "id": "Q",
+      "name": "SMA Negeri 1 Surakarta",
+      "lat": -7.55797,
+      "lng": 110.83054,
+      "koridor": ["K2"]
+    },
+    {
+      "id": "R",
+      "name": "Terminal Kartosuro",
+      "lat": -7.54452,
+      "lng": 110.73529,
+      "koridor": ["K3", "K4", "K5"]
+    },
+    {
+      "id": "S",
+      "name": "SMA Negeri 1 Kartasura",
+      "lat": -7.5530397,
+      "lng": 110.7333902,
+      "koridor": ["K3"]
+    },
+    {
+      "id": "T",
+      "name": "Jl. Raya Solo Yogyakarta",
+      "lat": -7.55059,
+      "lng": 110.73653,
+      "koridor": ["K3"]
+    },
+    {
+      "id": "U",
+      "name": "SMA Al-Muayyad Surakarta",
+      "lat": -7.56743,
+      "lng": 110.8007,
+      "koridor": ["K3"]
+    },
+    {
+      "id": "V",
+      "name": "SMA Negeri 7 Surakarta",
+      "lat": -7.57673,
+      "lng": 110.81748,
+      "koridor": ["K3"]
+    },
+    {
+      "id": "W",
+      "name": "MA Al-Islam Jamsaren Surakarta",
+      "lat": -7.58096,
+      "lng": 110.81564,
+      "koridor": ["K3", "K5", "K6"]
+    },
+    {
+      "id": "X",
+      "name": "Tugu Cembengan",
+      "lat": -7.57231,
+      "lng": 110.8198,
+      "koridor": ["K3"]
+    },
+    {
+      "id": "Y",
+      "name": "SMA Kristen 1 Surakarta",
+      "lat": -7.57788,
+      "lng": 110.81533,
+      "koridor": ["K6"]
+    },
+    {
+      "id": "Z",
+      "name": "JL Letjen S.Parman",
+      "lat": -7.55715,
+      "lng": 110.82427,
+      "koridor": ["K6"]
+    },
+    {
+      "id": "AA",
+      "name": "Akademi Seni Mangkunegaran Surakarta",
+      "lat": -7.56683,
+      "lng": 110.82413,
+      "koridor": ["K6"]
+    },
+    {
+      "id": "AB",
+      "name": "JL Ronggowarsito",
+      "lat": -7.56785,
+      "lng": 110.8222,
+      "koridor": ["K6"]
+    },
+    {
+      "id": "AC",
+      "name": "JL Diponegoro",
+      "lat": -7.56917,
+      "lng": 110.8222,
+      "koridor": ["K6"]
+    },
+    {
+      "id": "AD",
+      "name": "SMA Kristen Kalam Kudus Sukoharjo",
+      "lat": -7.6041588,
+      "lng": 110.8157068,
+      "koridor": ["K6"]
+    },
+    {
+      "id": "AE",
+      "name": "Solo Baru",
+      "lat": -7.6467,
+      "lng": 110.762,
+      "koridor": ["K6"]
+    },
+    {
+      "id": "AF",
+      "name": "JL Letjen. Suprapto",
+      "lat": -7.54662,
+      "lng": 110.805,
+      "koridor": ["K5"]
+    },
+    {
+      "id": "AG",
+      "name": "JL Dr Moewardi",
+      "lat": -7.56223,
+      "lng": 110.80683,
+      "koridor": ["K5"]
+    },
+    {
+      "id": "AH",
+      "name": "SMA Majlis Tafsir Al Qur'an Surakarta",
+      "lat": -7.58675,
+      "lng": 110.83638,
+      "koridor": ["K5"]
+    },
+    {
+      "id": "AI",
+      "name": "Sub Terminal Semanggi",
+      "lat": -7.5866,
+      "lng": 110.8588,
+      "koridor": ["K5"]
+    },
+    {
+      "id": "AJ",
+      "name": "Pasar Bekonang",
+      "lat": -7.60886,
+      "lng": 110.87416,
+      "koridor": ["K5"]
+    },
+    {
+      "id": "AM",
+      "name": "Colomadu",
+      "lat": -7.55655,
+      "lng": 110.79868,
+      "koridor": ["K5"]
+    },
+    {
+      "id": "AN",
+      "name": "SMA Negeri 4 Surakarta",
+      "lat": -7.55567,
+      "lng": 110.80231,
+      "koridor": ["K4"]
+    },
+    {
+      "id": "AO",
+      "name": "Terminal Tirtonadi",
+      "lat": -7.55171,
+      "lng": 110.81933,
+      "koridor": ["K4"]
+    },
+    {
+      "id": "AP",
+      "name": "SMK PGRI 2 Surakarta",
+      "lat": -7.54625,
+      "lng": 110.83077,
+      "koridor": ["K4"]
+    },
+    {
+      "id": "AQ",
+      "name": "Jl. KH. Maswi",
+      "lat": -7.56167,
+      "lng": 110.85973,
+      "koridor": ["K4"]
+    },
+    {
+      "id": "AR",
+      "name": "SMA Negeri 1 Mojolaban",
+      "lat": -7.60271,
+      "lng": 110.86906,
+      "koridor": ["K5"]
+    },
+    {
+      "id": "AS",
+      "name": "Bekonang",
+      "lat": -7.613,
+      "lng": 110.8742,
+      "koridor": ["K5"]
+    },
+    {
+      "id": "AT",
+      "name": "SMA Muhammadiyah 1 Surakarta",
+      "lat": -7.56459,
+      "lng": 110.82185,
+      "koridor": ["K6"]
+    }
+  ]
 }

@@ -45,15 +45,18 @@
 
         var pathLayer = null; // To store the current path layer
 
+        var dataGraph = {};
+
         // Load data from JSON file
         $(document).ready(function () {
             $.ajax({
-                url: 'data.json',
+                url: 'baru.json',
                 dataType: 'json',
                 success: function (data) {
-                    dataGraph = data; // Assign JSON data to Graph_nodes
+                    dataGraph = data; // Assign JSON data to dataGraph
                     populateDropdowns(); // Populate dropdowns after loading JSON
                     addNodeMarkers(); // Add markers after loading JSON
+                    addEventListeners(); // Add event listeners for dropdowns
                     visualizeShortestPaths(null);
                 }
             })
@@ -61,187 +64,112 @@
 
         // Define graph nodes and edges
         var Graph_nodes = {
-            'K1_1': [['K1_2', 2], ['K2_2', 2], ['K4_2', 2], ['K5_2', 2]],
-            'K1_2': [['K1_3', 2]],
-            'K1_3': [['K1_4', 2], ['K2_2', 2], ['K2_6', 2], ['K3_4', 2], ['K3_9', 2], ['K5_9', 2], ['K6_9', 2]],
-            'K1_4': [['K1_5', 2]],
-            'K1_5': [['K1_6', 2]],
-            'K1_6': [['K1_7', 2]],
-            'K1_7': [['K1_8', 2], ['K2_12', 2], ['K4_9', 2]],
-            'K1_8': [['K1_9', 2]],
-            'K1_9': [],
+            'A': [['B', 2]], // Bandara Adi Sumarmo 
+            'B': [['A', 2], ['C', 3], ['L', 4], ['R', 5], ['AM', 6]], // SMK Adi Sumarmo
+            'C': [['B', 3], ['D', 4]], // SMA Assalaam Sukoharjo 
+            'D': [['C', 4], ['E', 3], ['J', 1], ['K', 5], ['M', 6], ['N', 7], ['T', 8], ['U', 9], ['O', 10], ['AG', 11], ['AC', 12], ['Y', 13]], // SMA Batik 1 Surakarta 
+            'E': [['D', 3], ['F', 2]], // SMA Al Islam 1 Surakarta 
+            'F': [['E', 2], ['G', 2]], // SMK Negeri 8 Surakarta 
+            'G': [['F', 2], ['H', 3], ['O', 3], ['X', 4], ['Q', 5]], // SMA Muhammadiyah 3 Surakarta 
+            'H': [['G', 3], ['I', 4], ['AP', 5], ['AQ', 6]], // Universitas Sebelas Maret 
+            'I': [['J', 2], ['AQ', 4]], // Terminal Palur 
+            'J': [['D', 1]], // Sub Terminal Kerten
+            'K': [['D', 5], ['L', 2]], // SMK Warga
+            'L': [['K', 4], ['B', 4], ['M', 2], ['AN', 3], ['AG', 4]], // Sekolah Tinggi Pariwisata Sahid 
+            'M': [['L', 2], ['D', 3], ['AN', 1], ['AO', 2], ['AP', 3], ['AF', 4], ['Z', 5]], // SMK Negeri 6 Surakarta
+            'N': [['D', 3], ['O', 1]], // Victoria Hotel School
+            'O': [['N', 1], ['P', 2], ['D', 3], ['W', 3], ['AD', 4]], // SMA Muhammadiyah 2 Surakarta 
+            'P': [['O', 2], ['Q', 3], ['Z', 2], ['AT', 3]], // SMA 17 
+            'Q': [['P', 3], ['R', 2]], // SMA Negeri 1 Surakarta
+            'R': [['S', 2], ['B', 2]], // Terminal Kartosuro 
+            'S': [['R', 2], ['T', 2]], // SMA Negeri 1 Kartasura
+            'T': [['S', 3], ['U', 2]], // Jl. Raya Solo Yogyakarta
+            'U': [['D', 2], ['V', 2]], // SMA Al-Muayyad Surakarta 
+            'V': [['U', 2], ['W', 2]], // SMA Negeri 7 Surakarta 
+            'W': [['V', 2], ['O', 3], ['AH', 2], ['Y', 3]], // MA Al-Islam Jamsaren Surakarta 
+            'X': [['G', 3]], // Tugu Cembengan
+            'Y': [['D', 2], ['W', 3]], // SMA Kristen 1 Surakarta
+            'Z': [['M', 2], ['P', 2]], // JL Letjen S.Parman 
+            'AA': [['AB', 2], ['AT', 1]], // Akademi Seni Mangkunegaran Surakarta 
+            'AB': [['AA', 2], ['AC', 1]], // JL Ronggowarsito
+            'AC': [['AB', 1], ['D', 2]], // JL Diponegoro 
+            'AD': [['O', 2], ['AE', 3]], // JL Ir Soekarno 
+            'AE': [['AD', 3]], // Solo Baru
+            'AF': [['B', 3], ['M', 2]], // JL Letjen. Suprapto
+            'AG': [['L', 2], ['D', 3]], // JL Dr Moewardi 
+            'AH': [['W', 3], ['AJ', 4], ['AI', 3]], // SMA Majlis Tafsir Al Qur'an Surakarta 
+            'AI': [['AH', 4]], // Sub Terminal Semanggi 
+            'AJ': [['AH', 3], ['AR', 2]], // Pasar Bekonang
+            'AM': [['B', 2]], // colomadu
+            'AN': [['L', 3], ['M', 2]], // SMA N 4 Surakarta
+            'AO': [['M', 3]], // Terminal tirtonadi
+            'AP': [['M', 3], ['H', 3]], // SMK PGRI 2 Surakarta
+            'AQ': [['H', 3], ['I', 3]], // Jl.KH.Maswi
+            'AR': [['AJ', 2], ['AR', 3]], // SMA Negeri 1 Mojolaban
+            'AS': [['AR', 3]], // Bekonang
+            'AT': [['P', 3], ['AA', 1]], // SMA 1 Muhammadiyah Surakarta
 
-            'K2_1': [['K2_2', 2], ['K1_4', 2], ['K2_6', 2], ['K3_4', 2], ['K3_9', 2], ['K5_9', 2], ['K6_9', 2]],
-            'K2_2': [['K2_3', 2], ['K3_2', 2], ['K4_2', 2], ['K5_2', 2]],
-            'K2_3': [['K2_4', 2], ['K4_3', 2], ['K5_7', 2]],
-            'K2_4': [['K2_5', 2], ['K4_5', 2], ['K4_7', 2], ['K5_6', 2], ['K6_2', 2]],
-            'K2_5': [['K2_6', 2], ['K2_2', 2], ['K1_4', 2], ['K3_4', 2], ['K3_9', 2], ['K5_9', 2], ['K6_9', 2]],
-            'K2_6': [['K2_7', 2]],
-            'K2_7': [['K2_8', 2]],
-            'K2_8': [['K2_9', 2]],
-            'K2_9': [['K2_10', 2]],
-            'K2_10': [['K2_11', 2]],
-            'K2_11': [['K2_12', 2], ['K1_9', 2], ['K4_9', 2]],
-            'K2_12': [['K2_13', 2]],
-            'K2_13': [],
-
-            'K3_1': [['K3_2', 2]],
-            'K3_2': [['K3_3', 2]],
-            'K3_3': [['K3_4', 2], ['K2_2', 2], ['K2_6', 2], ['K1_4', 2], ['K3_9', 2], ['K5_9', 2], ['K6_9', 2]],
-            'K3_4': [['K3_5', 2]],
-            'K3_5': [['K3_6', 2]],
-            'K3_6': [['K3_7', 2]],
-            'K3_7': [['K3_8', 2]],
-            'K3_8': [['K3_9', 2], ['K2_2', 2], ['K2_6', 2], ['K3_4', 2], ['K1_4', 2], ['K5_9', 2], ['K6_9', 2], ['K5_10', 2], ['K6_12', 2]],
-            'K3_9': [['K3_10', 2]],
-            'K3_10': [['K3_11', 2]],
-            'K3_11': [['K3_12', 2]],
-            'K3_12': [['K3_13', 2]],
-            'K3_13': [],
-
-            'K4_1': [['K4_2', 2]],
-            'K4_2': [['K4_3', 2], ['K2_4', 2], ['K5_7', 2]],
-            'K4_3': [['K4_4', 2]],
-            'K4_4': [['K4_5', 2], ['K2_5', 2], ['K4_7', 2], ['K5_6', 2], ['K6_2', 2]],
-            'K4_5': [['K4_6', 2]],
-            'K4_6': [['K4_7', 2], ['K4_5', 2], ['K2_5', 2], ['K5_6', 2], ['K6_2', 2]],
-            'K4_7': [['K4_8', 2]],
-            'K4_8': [['K4_9', 2], ['K2_12', 2], ['K1_8', 2]],
-            'K4_9': [['K4_10', 2]],
-            'K4_10': [['K4_11', 2]],
-            'K4_11': [],
-
-            'K5_1': [['K5_2', 2]],
-            'K5_2': [['K5_3', 2]],
-            'K5_3': [['K5_4', 2]],
-            'K5_4': [['K5_5', 2]],
-            'K5_5': [['K5_6', 2], ['K4_5', 2], ['K4_7', 2], ['K2_5', 2], ['K6_2', 2]],
-            'K5_6': [['K5_7', 2], ['K4_3', 2], ['K2_4', 2]],
-            'K5_7': [['K5_8', 2]],
-            'K5_8': [['K5_9', 2], ['K2_2', 2], ['K2_6', 2], ['K3_4', 2], ['K3_9', 2], ['K1_4', 2], ['K6_9', 2]],
-            'K5_9': [['K5_10', 2], ['K3_9', 2], ['K6_12', 2]],
-            'K5_10': [['K5_11', 2]],
-            'K5_11': [['K5_12', 2]],
-            'K5_12': [['K5_13', 2]],
-            'K5_13': [['K5_14', 2]],
-            'K5_14': [['K5_15', 2]],
-            'K5_15': [['K5_16', 2]],
-            'K5_16': [['K5_17', 2]],
-            'K5_17': [],
-
-            'K6_1': [['K6_2', 2], ['K4_5', 2], ['K4_7', 2], ['K5_6', 2], ['K2_5', 2]],
-            'K6_2': [['K6_3', 2]],
-            'K6_3': [['K6_4', 2]],
-            'K6_4': [['K6_5', 2]],
-            'K6_5': [['K6_6', 2]],
-            'K6_6': [['K6_7', 2]],
-            'K6_7': [['K6_8', 2]],
-            'K6_8': [['K6_9', 2], ['K2_2', 2], ['K2_6', 2], ['K3_4', 2], ['K3_9', 2], ['K5_9', 2], ['K1_4', 2]],
-            'K6_9': [['K6_10', 2]],
-            'K6_10': [['K6_11', 2]],
-            'K6_11': [['K6_12', 2], ['K3_9', 2], ['K5_10', 2]],
-            'K6_12': [['K6_13', 2]],
-            'K6_13': [['K6_14', 2]],
-            'K6_14': [],
         };
+
 
         // Define heuristic function
         function heuristic(n) {
             // Sample heuristic function (replace with actual if needed)
             var H_dist = {
-                'K1_1': 2,
-                'K1_2': 2,
-                'K1_3': 2,
-                'K1_4': 2,
-                'K1_5': 2,
-                'K1_6': 2,
-                'K1_7': 2,
-                'K1_8': 2,
-                'K1_9': 2,
-
-                'K2_1': 2,
-                'K2_2': 2,
-                'K2_3': 2,
-                'K2_4': 2,
-                'K2_5': 2,
-                'K2_6': 2,
-                'K2_7': 2,
-                'K2_8': 2,
-                'K2_9': 2,
-                'K2_10': 2,
-                'K2_11': 2,
-                'K2_12': 2,
-                'K2_13': 2,
-
-                'K3_1': 2,
-                'K3_2': 2,
-                'K3_3': 2,
-                'K3_4': 2,
-                'K3_5': 2,
-                'K3_6': 2,
-                'K3_7': 2,
-                'K3_8': 2,
-                'K3_9': 2,
-                'K3_10': 2,
-                'K3_11': 2,
-                'K3_12': 2,
-                'K3_13': 2,
-
-                'K4_1': 2,
-                'K4_2': 2,
-                'K4_3': 2,
-                'K4_4': 2,
-                'K4_5': 2,
-                'K4_6': 2,
-                'K4_7': 2,
-                'K4_8': 2,
-                'K4_9': 2,
-                'K4_10': 2,
-                'K4_11': 2,
-
-                'K5_1': 2,
-                'K5_2': 2,
-                'K5_3': 2,
-                'K5_4': 2,
-                'K5_5': 2,
-                'K5_6': 2,
-                'K5_7': 2,
-                'K5_8': 2,
-                'K5_9': 2,
-                'K5_10': 2,
-                'K5_11': 2,
-                'K5_12': 2,
-                'K5_13': 2,
-                'K5_14': 2,
-                'K5_15': 2,
-                'K5_16': 2,
-                'K5_17': 2,
-
-                'K6_1': 2,
-                'K6_2': 2,
-                'K6_3': 2,
-                'K6_4': 2,
-                'K6_5': 2,
-                'K6_6': 2,
-                'K6_7': 2,
-                'K6_8': 2,
-                'K6_9': 2,
-                'K6_10': 2,
-                'K6_11': 2,
-                'K6_12': 2,
-                'K6_13': 2,
-                'K6_14': 2,
-
+                'A': 10,
+                'B': 10,
+                'C': 10,
+                'D': 10,
+                'E': 10,
+                'F': 10,
+                'G': 10,
+                'H': 10,
+                'I': 10,
+                'J': 10,
+                'K': 10,
+                'L': 10,
+                'M': 10,
+                'N': 10,
+                'O': 10,
+                'P': 10,
+                'Q': 10,
+                'R': 10,
+                'S': 10,
+                'T': 10,
+                'U': 10,
+                'V': 10,
+                'W': 10,
+                'X': 10,
+                'Y': 10,
+                'Z': 10,
+                'AA': 10,
+                'AB': 10,
+                'AC': 10,
+                'AD': 10,
+                'AE': 10,
+                'AF': 10,
+                'AG': 10,
+                'AH': 10,
+                'AI': 10,
+                'AJ': 10,
+                'AM': 10,
+                'AN': 10,
+                'AO': 10,
+                'AP': 10,
+                'AQ': 10,
+                'AR': 10,
+                'AS': 10,
+                'AT': 10
             };
             return H_dist[n];
         }
 
 
         // Function to find the shortest path using SMA*
-        function sma_star(start, goal, max_depth = 17) {
+        function sma_star(start, goal, max_depth = 1000) {
             var open_set = [{ name: start, g: 0, h: heuristic(start), f: heuristic(start), parent: null }];
             var closed_set = new Set();
-            var max_open_size = 6; // Limit size of open set
+            var max_open_size = 20; // Limit size of open set
 
             while (open_set.length > 0) {
                 open_set.sort((a, b) => a.f - b.f);
@@ -282,6 +210,7 @@
                 }
             }
 
+
             console.log("Path does not exist!");
             return null;
         }
@@ -297,46 +226,73 @@
             return path;
         }
 
-        // Function to populate dropdowns with nodes
         function populateDropdowns() {
             var startSelect = document.getElementById('startNode');
             var goalSelect = document.getElementById('goalNode');
 
             // Set untuk menyimpan nama-nama rute yang sudah ditambahkan
             var addedRoutes = new Set();
-            // Iterate through each koridor
-            Object.keys(dataGraph).forEach(koridor => {
-                // Iterate through each route in the current koridor
-                dataGraph[koridor].route.forEach(route => {
-                    // Memeriksa apakah nama rute sudah ditambahkan ke dropdown
-                    if (!addedRoutes.has(route.name)) {
-                        var option = document.createElement('option');
-                        option.value = route.id;
-                        option.textContent = route.name;
-                        startSelect.appendChild(option.cloneNode(true));
-                        goalSelect.appendChild(option.cloneNode(true));
-                        addedRoutes.add(route.name); // Menambahkan nama rute ke set
-                    }
-                });
+
+            // Iterate through each route in the JSON data
+            dataGraph.routes.forEach(route => {
+                if (!addedRoutes.has(route.id)) {
+                    // Create an option element for the dropdown
+                    var option = document.createElement('option');
+                    option.value = route.id;
+                    option.textContent = route.name;
+
+                    // Add the option to the start dropdown
+                    startSelect.appendChild(option);
+
+                    // Add the route ID to the set of added routes
+                    addedRoutes.add(route.id);
+                }
             });
         }
 
-
-        // Function to create markers for nodes
         function addNodeMarkers() {
-            Object.keys(dataGraph).forEach(koridor => {
-                dataGraph[koridor].route.forEach(route => {
-                    var latLng = [route.lat, route.lng];
-                    var marker = L.marker(latLng).addTo(map);
-                    marker.bindPopup(route.name);
-                });
+            dataGraph.routes.forEach(route => {
+                var latLng = [route.lat, route.lng];
+                var marker = L.marker(latLng).addTo(map);
+                marker.bindPopup(route.name);
             });
+        }
+
+        function addEventListeners() {
+            var startSelect = document.getElementById('startNode');
+            startSelect.addEventListener('change', filterGoalNodeOptions);
+        }
+
+        function filterGoalNodeOptions() {
+            var startSelect = document.getElementById('startNode');
+            var goalSelect = document.getElementById('goalNode');
+
+            // Clear current options in the goalNode dropdown
+            goalSelect.innerHTML = '';
+
+            // Get the selected startNode
+            var selectedStartNodeId = startSelect.value;
+            var selectedStartNode = dataGraph.routes.find(route => route.id === selectedStartNodeId);
+
+            if (selectedStartNode) {
+                var startKoridor = selectedStartNode.koridor;
+
+                // Filter routes that share at least one koridor with the selected startNode
+                dataGraph.routes.forEach(route => {
+                    var hasCommonKoridor = route.koridor.some(k => startKoridor.includes(k));
+                    if (hasCommonKoridor && route.id !== selectedStartNodeId) {
+                        var option = document.createElement('option');
+                        option.value = route.id;
+                        option.textContent = route.name;
+                        goalSelect.appendChild(option);
+                    }
+                });
+            }
         }
 
         // Function to visualize the shortest path
         function visualizeShortestPaths(path) {
             if (path === null) {
-                alert("Path not found!");
                 console.log("Path does not exist!");
                 if (pathLayer !== null) {
                     map.removeLayer(pathLayer); // Remove the current path layer if it exists
@@ -352,18 +308,14 @@
             var markers = [];
             var routeDetails = []; // Array to store route details for the sidebar
 
-            path.forEach(node => {
-                Object.keys(dataGraph).forEach(koridor => {
-                    // Iterate through each route in the current koridor
-                    dataGraph[koridor].route.forEach(route => {
-                        if (route.id == node) {
-                            var latLng = [route.lat, route.lng];
-                            latLngs.push(latLng);
-                            markers.push(createMarker(latLng, route.name));
-                            routeDetails.push({ id: route.id, name: route.name }); // Store route details
-                        }
-                    });
-                });
+            path.forEach(nodeId => {
+                var node = dataGraph.routes.find(route => route.id === nodeId);
+                if (node) {
+                    var latLng = [node.lat, node.lng];
+                    latLngs.push(latLng);
+                    markers.push(L.marker(latLng).bindPopup(node.name));
+                    routeDetails.push({ id: node.id, name: node.name, koridor: node.koridor.join(", ") }); // Store route details
+                }
             });
 
             pathLayer = L.polyline(latLngs, { color: 'red' }).addTo(map);
@@ -379,7 +331,7 @@
             nodeInfoDiv.innerHTML = '<strong>Rute Terpendek:</strong>';
             routeDetails.forEach(route => {
                 var routeLabel = document.createElement('div');
-                routeLabel.textContent = `ID: ${route.id}, Name: ${route.name}`;
+                routeLabel.textContent = `ID: ${route.id}, Name: ${route.name}, Koridor: ${route.koridor}`;
                 nodeInfoDiv.appendChild(routeLabel);
             });
         }
@@ -388,6 +340,7 @@
         function findPath() {
             var startNode = document.getElementById('startNode').value;
             var goalNode = document.getElementById('goalNode').value;
+            console.log(startNode, goalNode);
 
             if (startNode === goalNode) {
                 alert("Start node and goal node cannot be the same!");
@@ -399,6 +352,7 @@
             }
 
             var path = sma_star(startNode, goalNode);
+            console.log(path);
             if (path !== null) {
                 console.log("Path found:", path);
                 visualizeShortestPaths(path);
