@@ -29,9 +29,22 @@
         </div>
     </div>
 
+    <div class="toggle-btn" id="toggleBtn"><span>&#9664;</span></div>
+        
     <div id="mapid"></div>
 
     <script>
+        document.getElementById('toggleBtn').addEventListener('click', function () {
+            var sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+
+            var toggleBtnIcon = document.querySelector('.toggle-btn span');
+            if (sidebar.classList.contains('hidden')) {
+                toggleBtnIcon.innerHTML = '&#9654;';
+            } else {
+                toggleBtnIcon.innerHTML = '&#9664;';
+            }
+        });
         // Function to create markers
         function createMarker(latlng, label) {
             return L.marker(latlng).bindPopup(label);
@@ -64,50 +77,52 @@
 
         // Define graph nodes and edges
         var Graph_nodes = {
-            'A': [['B', 2]], // Bandara Adi Sumarmo 
-            'B': [['A', 2], ['C', 3], ['L', 4], ['R', 5], ['AM', 6]], // SMK Adi Sumarmo
-            'C': [['B', 3], ['D', 4]], // SMA Assalaam Sukoharjo 
-            'D': [['C', 4], ['E', 3], ['J', 1], ['K', 5], ['M', 6], ['N', 7], ['T', 8], ['U', 9], ['O', 10], ['AG', 11], ['AC', 12], ['Y', 13]], // SMA Batik 1 Surakarta 
-            'E': [['D', 3], ['F', 2]], // SMA Al Islam 1 Surakarta 
-            'F': [['E', 2], ['G', 2]], // SMK Negeri 8 Surakarta 
-            'G': [['F', 2], ['H', 3], ['O', 3], ['X', 4], ['Q', 5]], // SMA Muhammadiyah 3 Surakarta 
-            'H': [['G', 3], ['I', 4], ['AP', 5], ['AQ', 6]], // Universitas Sebelas Maret 
-            'I': [['J', 2], ['AQ', 4]], // Terminal Palur 
-            'J': [['D', 1]], // Sub Terminal Kerten
-            'K': [['D', 5], ['L', 2]], // SMK Warga
-            'L': [['K', 4], ['B', 4], ['M', 2], ['AN', 3], ['AG', 4]], // Sekolah Tinggi Pariwisata Sahid 
-            'M': [['L', 2], ['D', 3], ['AN', 1], ['AO', 2], ['AP', 3], ['AF', 4], ['Z', 5]], // SMK Negeri 6 Surakarta
-            'N': [['D', 3], ['O', 1]], // Victoria Hotel School
-            'O': [['N', 1], ['P', 2], ['D', 3], ['W', 3], ['AD', 4]], // SMA Muhammadiyah 2 Surakarta 
-            'P': [['O', 2], ['Q', 3], ['Z', 2], ['AT', 3]], // SMA 17 
-            'Q': [['P', 3], ['R', 2]], // SMA Negeri 1 Surakarta
-            'R': [['S', 2], ['B', 2]], // Terminal Kartosuro 
-            'S': [['R', 2], ['T', 2]], // SMA Negeri 1 Kartasura
-            'T': [['S', 3], ['U', 2]], // Jl. Raya Solo Yogyakarta
-            'U': [['D', 2], ['V', 2]], // SMA Al-Muayyad Surakarta 
-            'V': [['U', 2], ['W', 2]], // SMA Negeri 7 Surakarta 
-            'W': [['V', 2], ['O', 3], ['AH', 2], ['Y', 3]], // MA Al-Islam Jamsaren Surakarta 
-            'X': [['G', 3]], // Tugu Cembengan
-            'Y': [['D', 2], ['W', 3]], // SMA Kristen 1 Surakarta
-            'Z': [['M', 2], ['P', 2]], // JL Letjen S.Parman 
-            'AA': [['AB', 2], ['AT', 1]], // Akademi Seni Mangkunegaran Surakarta 
-            'AB': [['AA', 2], ['AC', 1]], // JL Ronggowarsito
-            'AC': [['AB', 1], ['D', 2]], // JL Diponegoro 
-            'AD': [['O', 2], ['AE', 3]], // JL Ir Soekarno 
-            'AE': [['AD', 3]], // Solo Baru
-            'AF': [['B', 3], ['M', 2]], // JL Letjen. Suprapto
-            'AG': [['L', 2], ['D', 3]], // JL Dr Moewardi 
-            'AH': [['W', 3], ['AJ', 4], ['AI', 3]], // SMA Majlis Tafsir Al Qur'an Surakarta 
-            'AI': [['AH', 4]], // Sub Terminal Semanggi 
-            'AJ': [['AH', 3], ['AR', 2]], // Pasar Bekonang
+            'A': [['B', 5.3]], // Bandara Adi Sumarmo 
+            'B': [['A', 5.3], ['C', 3.6], ['L', 4.2], ['R', 5], ['AM', 2]], // SMK Adi Sumarmo
+            'C': [['B', 3.6], ['D', 3.7]], // SMA Assalaam Sukoharjo 
+            'D': [['C', 3.7], ['E', 6.5], ['J', 2.4], ['K', 8.6], ['M', 1.9], ['N', 5.1], ['T', 7.9], ['U', 3.8], ['O', 3.7], ['AG', 3.3], ['AC', 4.8], ['Y', 6.2]], // SMA Batik 1 Surakarta 
+            'E': [['D', 6.5], ['F', 3.2]], // SMA Al Islam 1 Surakarta 
+            'F': [['E', 3.2], ['G', 2.4]], // SMK Negeri 8 Surakarta 
+            'G': [['F', 2.4], ['H', 1], ['O', 5.1], ['X', 0.5], ['Q', 2.4]], // SMA Muhammadiyah 3 Surakarta 
+            'H': [['G', 1], ['I', 1], ['AP', 3.5], ['AQ', 1.7]], // Universitas Sebelas Maret 
+            'I': [['J', 34.7], ['AQ', 36.7]], // Terminal Palur 
+            'J': [['D', 2.4]], // Sub Terminal Kerten
+            'K': [['D', 8.6], ['L', 7.6]], // SMK Warga
+            'L': [['K', 7.6], ['B', 4.2], ['M', 1.5], ['AN', 2], ['AG', 4.8]], // Sekolah Tinggi Pariwisata Sahid 
+            'M': [['L', 1.5], ['D', 1.9], ['AN', 0.6], ['AO', 3.2], ['AP', 4.5], ['AF', 1.3], ['Z', 3.6]], // SMK Negeri 6 Surakarta
+            'N': [['D', 5.1], ['O', 0.5]], // Victoria Hotel School
+            'O': [['N', 0.5], ['P', 0.7], ['D', 3.7], ['W', 2.4], ['AD', 5.3]], // SMA Muhammadiyah 2 Surakarta 
+            'P': [['O', 0.7], ['Q', 2], ['Z', 1.2], ['AT', 1.1]], // SMA 17 
+            'Q': [['P', 2], ['G', 2.4]], // SMA Negeri 1 Surakarta
+            'R': [['S', 13.2], ['B', 5]], // Terminal Kartosuro 
+            'S': [['R', 13.2], ['T', 12.8]], // SMA Negeri 1 Kartasura
+            'T': [['S', 12.8], ['D', 7.9]], // Jl. Raya Solo Yogyakarta
+            'U': [['D', 3.8], ['V', 2.7]], // SMA Al-Muayyad Surakarta 
+            'V': [['U', 2.7], ['W', 0.8]], // SMA Negeri 7 Surakarta 
+            'W': [['V', 0.8], ['O', 3], ['AH', 2.4], ['Y', 0.4]], // MA Al-Islam Jamsaren Surakarta 
+            'X': [['G', 0.5]], // Tugu Cembengan
+            'Y': [['D', 6.2], ['W', 0.4]], // SMA Kristen 1 Surakarta
+            'Z': [['M', 3.6], ['P', 1.2]], // JL Letjen S.Parman 
+            'AA': [['AB', 0.3], ['AT', 10.5]], // Akademi Seni Mangkunegaran Surakarta 
+            'AB': [['AA', 0.3], ['AC', 0.8]], // JL Ronggowarsito
+            'AC': [['AB', 0.8], ['D', 4.8]], // JL Diponegoro 
+            'AD': [['O', 5.3], ['AE', 0.9]], // JL Ir Soekarno 
+            'AE': [['AD', 0.9]], // Solo Baru
+            'AF': [['B', 6.4], ['M', 1.3]], // JL Letjen. Suprapto
+            'AG': [['L', 4.8], ['D', 3.3]], // JL Dr Moewardi 
+            'AH': [['W', 2.4], ['AJ', 4.9], ['AI', 0.3]], // SMA Majlis Tafsir Al Qur'an Surakarta 
+            'AI': [['AH', 0.3]], // Sub Terminal Semanggi 
+            'AJ': [['AH', 4.9], ['AR', 1.3]], // Pasar Bekonang
             'AM': [['B', 2]], // colomadu
-            'AN': [['L', 3], ['M', 2]], // SMA N 4 Surakarta
-            'AO': [['M', 3]], // Terminal tirtonadi
-            'AP': [['M', 3], ['H', 3]], // SMK PGRI 2 Surakarta
-            'AQ': [['H', 3], ['I', 3]], // Jl.KH.Maswi
-            'AR': [['AJ', 2], ['AR', 3]], // SMA Negeri 1 Mojolaban
-            'AS': [['AR', 3]], // Bekonang
-            'AT': [['P', 3], ['AA', 1]], // SMA 1 Muhammadiyah Surakarta
+            'AN': [['L', 2], ['M', 0.6]], // SMA N 4 Surakarta
+            'AO': [['M', 2.7]], // Terminal tirtonadi
+            'AP': [['M', 4.5], ['H', 3.5]], // SMK PGRI 2 Surakarta
+            'AQ': [['H', 1.7], ['I', 2]], // Jl.KH.Maswi
+            'AR': [['AJ', 1.3], ['AR', 2]], // SMA Negeri 1 Mojolaban
+            'AS': [['AR', 2]], // Bekonang
+            'AT': [['P', 1.1], ['AA', 0.5]], // SMA 1 Muhammadiyah Surakarta
+
+
 
         };
 
@@ -116,50 +131,50 @@
         function heuristic(n) {
             // Sample heuristic function (replace with actual if needed)
             var H_dist = {
-                'A': 10,
-                'B': 10,
-                'C': 10,
-                'D': 10,
-                'E': 10,
-                'F': 10,
-                'G': 10,
-                'H': 10,
-                'I': 10,
-                'J': 10,
-                'K': 10,
-                'L': 10,
-                'M': 10,
-                'N': 10,
-                'O': 10,
-                'P': 10,
-                'Q': 10,
-                'R': 10,
-                'S': 10,
-                'T': 10,
-                'U': 10,
-                'V': 10,
-                'W': 10,
-                'X': 10,
-                'Y': 10,
-                'Z': 10,
-                'AA': 10,
-                'AB': 10,
-                'AC': 10,
-                'AD': 10,
-                'AE': 10,
-                'AF': 10,
-                'AG': 10,
-                'AH': 10,
-                'AI': 10,
-                'AJ': 10,
-                'AM': 10,
-                'AN': 10,
-                'AO': 10,
-                'AP': 10,
-                'AQ': 10,
-                'AR': 10,
-                'AS': 10,
-                'AT': 10
+                'A': 2,
+                'B': 2,
+                'C': 2,
+                'D': 2,
+                'E': 2,
+                'F': 2,
+                'G': 2,
+                'H': 2,
+                'I': 2,
+                'J': 2,
+                'K': 2,
+                'L': 2,
+                'M': 2,
+                'N': 2,
+                'O': 2,
+                'P': 2,
+                'Q': 2,
+                'R': 2,
+                'S': 2,
+                'T': 2,
+                'U': 2,
+                'V': 2,
+                'W': 2,
+                'X': 2,
+                'Y': 2,
+                'Z': 2,
+                'AA': 2,
+                'AB': 2,
+                'AC': 2,
+                'AD': 2,
+                'AE': 2,
+                'AF': 2,
+                'AG': 2,
+                'AH': 2,
+                'AI': 2,
+                'AJ': 2,
+                'AM': 2,
+                'AN': 2,
+                'AO': 2,
+                'AP': 2,
+                'AQ': 2,
+                'AR': 2,
+                'AS': 2,
+                'AT': 2
             };
             return H_dist[n];
         }
