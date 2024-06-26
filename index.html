@@ -50,7 +50,7 @@
         // Load data from JSON file
         $(document).ready(function () {
             $.ajax({
-                url: 'baru.json',
+                url: 'data.json',
                 dataType: 'json',
                 success: function (data) {
                     dataGraph = data; // Assign JSON data to dataGraph
@@ -169,7 +169,7 @@
         function sma_star(start, goal, max_depth = 1000) {
             var open_set = [{ name: start, g: 0, h: heuristic(start), f: heuristic(start), parent: null }];
             var closed_set = new Set();
-            var max_open_size = 20; // Limit size of open set
+            var max_open_size = 30; // Limit size of open set
 
             while (open_set.length > 0) {
                 open_set.sort((a, b) => a.f - b.f);
@@ -290,6 +290,17 @@
             }
         }
 
+        const koridorColors = {
+            'K1': 'red',
+            'K2': 'blue',
+            'K3': 'green',
+            'K4': 'purple',
+            'K5': 'black',
+            'K6': 'magenta',
+        };
+        
+        var pathLayer = null;
+        
         // Function to visualize the shortest path
         function visualizeShortestPaths(path) {
             if (path === null) {
@@ -304,27 +315,45 @@
                 map.removeLayer(pathLayer); // Remove the current path layer if it exists
             }
 
-            var latLngs = [];
-            var markers = [];
             var routeDetails = []; // Array to store route details for the sidebar
+            var segments = []; // Array to store the segments of the path with their respective colors
 
-            path.forEach(nodeId => {
-                var node = dataGraph.routes.find(route => route.id === nodeId);
-                if (node) {
-                    var latLng = [node.lat, node.lng];
-                    latLngs.push(latLng);
-                    markers.push(L.marker(latLng).bindPopup(node.name));
-                    routeDetails.push({ id: node.id, name: node.name, koridor: node.koridor.join(", ") }); // Store route details
+            for (let i = 0; i < path.length - 1; i++) {
+                var startNodeId = path[i];
+                var endNodeId = path[i + 1];
+                
+                var startNode = dataGraph.routes.find(route => route.id === startNodeId);
+                var endNode = dataGraph.routes.find(route => route.id === endNodeId);
+
+                if (startNode && endNode) {
+                    var latLngs = [[startNode.lat, startNode.lng], [endNode.lat, endNode.lng]];
+
+                    // Determine the color based on the corridor transition
+                    var startCorridor = startNode.koridor[0];
+                    var endCorridor = endNode.koridor[0];
+                    var color;
+
+                    if (startCorridor === endCorridor) {
+                        color = koridorColors[startCorridor] || 'black'; // Same corridor
+                    } else {
+                        color = koridorColors[endCorridor] || 'black'; // Transition to new corridor
+                    }
+
+                    segments.push({ latLngs: latLngs, color: color });
+
+                    routeDetails.push({ id: startNode.id, name: startNode.name, koridor: startNode.koridor.join(", ") });
+                    routeDetails.push({ id: endNode.id, name: endNode.name, koridor: endNode.koridor.join(", ") });
                 }
-            });
+            }
 
-            pathLayer = L.polyline(latLngs, { color: 'red' }).addTo(map);
+            // Draw each segment with the appropriate color
+            pathLayer = L.layerGroup(segments.map(segment => L.polyline(segment.latLngs, { color: segment.color })));
 
-            markers.forEach(marker => {
-                marker.addTo(map);
-            });
+            // Add the layer group to the map
+            pathLayer.addTo(map);
 
-            map.fitBounds(pathLayer.getBounds()); // Fit map to bounds of the path
+            map.fitBounds(L.polyline(segments.flatMap(segment => segment.latLngs)).getBounds()); // Fit map to bounds of the path
+
 
             // Update Rute Terpendek in the sidebar
             var nodeInfoDiv = document.getElementById('nodeInfo');
