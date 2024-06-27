@@ -2,12 +2,13 @@
   position: absolute;
   top: 10px;
   right: 10px;
+  bottom: 10px;
   background-color: #fff;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  width: 22%;
+  width: 300px;
 }
 
 .sidebar h3 {
