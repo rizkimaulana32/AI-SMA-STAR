@@ -8,549 +8,110 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Styling for sidebar */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: -300px; /* Start with sidebar hidden */
-            width: 250px;
-            height: 100%;
-            background-color: #f2f2f2;
-            transition: left 0.3s ease;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            overflow-x: hidden;
-        }
-
-        .sidebar.open {
-            right: 0; /* Slide in sidebar when opened */
-        }
-
-        .sidebar .close-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: #666;
-            display: none; /* Initially hidden */
-        }
-
-        .sidebar.open .close-btn {
-            display: block; /* Show close button when sidebar is open */
-        }
-
-        .sidebar h3 {
-            margin-top: 20px;
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .sidebar .node-info {
-            padding: 10px;
-        }
-
-        .legends {
-            margin-top: 20px;
-            padding: 10px;
-            border-top: 1px solid #ccc;
-        }
-
-        .legends h3 {
-            margin-bottom: 10px;
-        }
-
-        .legend-item {
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-        }
-
-        .legend-color {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            margin-right: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .toggle-sidebar-btn {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            z-index: 1100;
-        }
-
-        .toggle-sidebar-btn img {
-            width: 40px; /* Adjust image size as needed */
-            height: auto;
-        }
-        .sidebar .toggle-btn {
-            position: absolute;
-            top: 10px;
-            right: 110px;
-            padding: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .sidebar .toggle-btn svg {
-            width: 20px; /* Ukuran ikon */
-            height: 20px;
-            fill: #333; /* Warna ikon */
-         }
-
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <button class="toggle-sidebar-btn" onclick="toggleSidebar()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M3 5h18v2H3V5zM3 11h18v2H3v-2zM3 17h18v2H3v-2z"/>
+<body class="bg-gray-100">
+
+    <!-- Sidebar Toggle Button (Hamburger) -->
+    <button id="sidebar-toggle" class="fixed top-5 right-5 bg-transparent border-none cursor-pointer z-20"
+        onclick="toggleSidebar()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8">
+            <path d="M3 5h18v2H3V5zM3 11h18v2H3v-2zM3 17h18v2H3v-2z" />
         </svg>
     </button>
-    <div class="sidebar">
-        <button class="toggle-btn" onclick="toggleSidebar()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path d="M19.707 4.293a1 1 0 0 0-1.414 0L12 10.586 5.707 4.293a1 1 0 0 0-1.414 1.414L10.586 12 4.293 18.293a1 1 0 1 0 1.414 1.414L12 13.414l6.293 6.293a1 1 0 0 0 1.414-1.414L13.414 12l6.293-6.293a1 1 0 0 0 0-1.414z"/>
-            </svg>
-        </button>
-        <h3>Select Start and Goal Nodes</h3>
-        <label for="startNode">Start Node:</label>
-        <select id="startNode">
-            <!-- Dynamically populated options will be added here -->
-        </select>
-        <label for="goalNode">Goal Node:</label>
-        <select id="goalNode">
-            <!-- Dynamically populated options will be added here -->
-        </select>
-        <button onclick="findPath()">Find Path</button>
 
-        <div class="node-info" id="nodeInfo">
-            Rute Terpendek:
+    <!-- Sidebar -->
+    <div
+        class="sidebar fixed top-0 right-0 h-full bg-white md:w-80 w-64 shadow-md transform translate-x-full transition-transform z-50 overflow-y-auto">
+        <!-- Close Button -->
+        <div class="flex justify-end px-4 pt-4">
+            <button id="sidebar-close" onclick="toggleSidebar()"
+                class="text-gray-600 focus:outline-none hover:text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6">
+                    <path
+                        d="M19.707 4.293a1 1 0 0 0-1.414 0L12 10.586 5.707 4.293a1 1 0 0 0-1.414 1.414L10.586 12 4.293 18.293a1 1 0 1 0 1.414 1.414L12 13.414l6.293 6.293a1 1 0 0 0 1.414-1.414L13.414 12l6.293-6.293a1 1 0 0 0 0-1.414z" />
+                </svg>
+            </button>
         </div>
 
-        <div class="legends">
-            <h3>Corridor Legends</h3>
-            <div id="corridorLegends">
-                <!-- Color-coded legends will be added here -->
+        <!-- Sidebar Content -->
+        <div class="px-4">
+            <h3 class="mt-4 mb-4 text-lg font-semibold text-gray-900">Select Start and Goal Nodes</h3>
+
+            <!-- Start Node Dropdown -->
+            <div class="mb-4">
+                <label for="startNode" class="block text-sm font-medium text-gray-900">Start Node:</label>
+                <select id="startNode"
+                    class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+                    <option selected>Choose a node</option>
+                    <!-- Dynamically populated options will be added here -->
+                </select>
+            </div>
+
+            <!-- Goal Node Dropdown -->
+            <div class="mb-4">
+                <label for="goalNode" class="block text-sm font-medium text-gray-900">Goal Node:</label>
+                <select id="goalNode"
+                    class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+                    <option selected>Choose a node</option>
+                    <!-- Dynamically populated options will be added here -->
+                </select>
+            </div>
+
+            <!-- Find Path Button -->
+            <button onclick="findPath()"
+                class="w-full p-2 bg-emerald-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                Find Path
+            </button>
+
+            <!-- Node Info Section -->
+            <div class="mt-6" id="nodeInfo">
+                <strong class="block mb-2 text-sm font-medium text-gray-900">Rute Terpendek:</strong>
+                <!-- Content dynamically updated based on selection -->
+            </div>
+
+            <!-- Corridor Legends Section -->
+            <div class="mt-6 border-t border-gray-300 py-4">
+                <h3 class="mb-4 text-md font-semibold text-gray-900">Corridor Legends</h3>
+                <div id="corridorLegends" class="legends">
+                    <!-- Color-coded legends will be added here -->
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Map Container -->
+    <div id="mapid" class="h-screen w-screen z-0">
 
-    <div id="mapid"></div>
 
+    </div>
+
+    <!-- JavaScript for Sidebar Toggle -->
     <script>
-
-        // Function to create markers
-        function createMarker(latlng, label) {
-            return L.marker(latlng).bindPopup(label);
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('translate-x-full');
+            sidebar.classList.toggle('translate-x-0');
         }
 
-        var map = L.map('mapid').setView([-7.55, 110.82], 13); // Centered on Surakarta
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        var dataGraph = {};
-
-        // Load data from JSON file
-        $(document).ready(function () {
-            $.ajax({
-                url: 'data.json',
-                dataType: 'json',
-                success: function (data) {
-                    dataGraph = data; // Assign JSON data to dataGraph
-                    populateDropdowns(); // Populate dropdowns after loading JSON
-                    addNodeMarkers(); // Add markers after loading JSON
-                    addEventListeners(); // Add event listeners for dropdowns
-                    visualizeShortestPaths(null);
-                }
-            })
+        // Toggle visibility of close button
+        const toggleButton = document.querySelector('#sidebar-toggle');
+        toggleButton.addEventListener('click', function () {
+            toggleButton.classList.add("hidden");
+            closeButton.classList.remove("hidden");
         })
 
-        // Define graph nodes and edges
-        var Graph_nodes = {
-            'A': [['B', 5.3]], // Bandara Adi Sumarmo 
-            'B': [['A', 5.3], ['C', 3.6], ['L', 4.2], ['R', 5], ['AM', 2], ['AF', 3.6]], // SMK Adi Sumarmo
-            'C': [['B', 3.6], ['D', 3.7]], // SMA Assalaam Sukoharjo 
-            'D': [['C', 3.7], ['E', 6.5], ['J', 2.4], ['K', 8.6], ['M', 1.9], ['N', 5.1], ['T', 7.9], ['U', 3.8], ['O', 3.7], ['AG', 3.3], ['AC', 4.8], ['Y', 6.2]], // SMA Batik 1 Surakarta 
-            'E': [['D', 6.5], ['F', 3.2]], // SMA Al Islam 1 Surakarta 
-            'F': [['E', 3.2], ['G', 2.4]], // SMK Negeri 8 Surakarta 
-            'G': [['F', 2.4], ['H', 1], ['O', 5.1], ['X', 0.5], ['Q', 2.4]], // SMA Muhammadiyah 3 Surakarta 
-            'H': [['G', 1], ['I', 1], ['AP', 3.5], ['AQ', 1.7]], // Universitas Sebelas Maret 
-            'I': [['J', 34.7], ['AQ', 36.7]], // Terminal Palur 
-            'J': [['D', 2.4]], // Sub Terminal Kerten
-            'K': [['D', 8.6], ['L', 7.6]], // SMK Warga
-            'L': [['K', 7.6], ['B', 4.2], ['M', 1.5], ['AN', 2], ['AG', 4.8]], // Sekolah Tinggi Pariwisata Sahid 
-            'M': [['L', 1.5], ['D', 1.9], ['AN', 0.6], ['AO', 3.2], ['AP', 4.5], ['AF', 1.3], ['Z', 3.6]], // SMK Negeri 6 Surakarta
-            'N': [['D', 5.1], ['O', 0.5]], // Victoria Hotel School
-            'O': [['N', 0.5], ['P', 0.7], ['D', 3.7], ['W', 2.4], ['AD', 5.3]], // SMA Muhammadiyah 2 Surakarta 
-            'P': [['O', 0.7], ['Q', 2], ['Z', 1.2], ['AT', 1.1]], // SMA 17 
-            'Q': [['P', 2], ['G', 2.4]], // SMA Negeri 1 Surakarta
-            'R': [['S', 13.2], ['B', 5]], // Terminal Kartosuro 
-            'S': [['R', 13.2], ['T', 12.8]], // SMA Negeri 1 Kartasura
-            'T': [['S', 12.8], ['D', 7.9]], // Jl. Raya Solo Yogyakarta
-            'U': [['D', 3.8], ['V', 2.7]], // SMA Al-Muayyad Surakarta 
-            'V': [['U', 2.7], ['W', 0.8]], // SMA Negeri 7 Surakarta 
-            'W': [['V', 0.8], ['O', 3], ['AH', 2.4], ['Y', 0.4]], // MA Al-Islam Jamsaren Surakarta 
-            'X': [['G', 0.5]], // Tugu Cembengan
-            'Y': [['D', 6.2], ['W', 0.4]], // SMA Kristen 1 Surakarta
-            'Z': [['M', 3.6], ['P', 1.2]], // JL Letjen S.Parman 
-            'AA': [['AB', 0.3], ['AT', 10.5]], // Akademi Seni Mangkunegaran Surakarta 
-            'AB': [['AA', 0.3], ['AC', 0.8]], // JL Ronggowarsito
-            'AC': [['AB', 0.8], ['D', 4.8]], // JL Diponegoro 
-            'AD': [['O', 5.3], ['AE', 0.9]], // JL Ir Soekarno 
-            'AE': [['AD', 0.9]], // Solo Baru
-            'AF': [['B', 6.4], ['M', 1.3]], // JL Letjen. Suprapto
-            'AG': [['L', 4.8], ['D', 3.3]], // JL Dr Moewardi 
-            'AH': [['W', 2.4], ['AJ', 4.9], ['AI', 0.3]], // SMA Majlis Tafsir Al Qur'an Surakarta 
-            'AI': [['AH', 0.3]], // Sub Terminal Semanggi 
-            'AJ': [['AH', 4.9], ['AR', 1.3]], // Pasar Bekonang
-            'AM': [['B', 2]], // colomadu
-            'AN': [['L', 2], ['M', 0.6]], // SMA N 4 Surakarta
-            'AO': [['M', 2.7]], // Terminal tirtonadi
-            'AP': [['M', 4.5], ['H', 3.5]], // SMK PGRI 2 Surakarta
-            'AQ': [['H', 1.7], ['I', 2]], // Jl.KH.Maswi
-            'AR': [['AJ', 1.3], ['AS', 2]], // SMA Negeri 1 Mojolaban
-            'AS': [['AR', 2]], // Bekonang
-            'AT': [['P', 1.1], ['AA', 0.5]], // SMA 1 Muhammadiyah Surakarta
+        const closeButton = document.querySelector('#sidebar-close');
+        closeButton.addEventListener('click', function () {
+            closeButton.classList.add("hidden");
+            toggleButton.classList.remove("hidden");
+        })
 
-        };
-
-
-        // Define heuristic function
-        function heuristic(n) {
-            // Sample heuristic function (replace with actual if needed)
-            var H_dist = {
-                'A': 2,
-                'B': 2,
-                'C': 2,
-                'D': 2,
-                'E': 2,
-                'F': 2,
-                'G': 2,
-                'H': 2,
-                'I': 2,
-                'J': 2,
-                'K': 2,
-                'L': 2,
-                'M': 2,
-                'N': 2,
-                'O': 2,
-                'P': 2,
-                'Q': 2,
-                'R': 2,
-                'S': 2,
-                'T': 2,
-                'U': 2,
-                'V': 2,
-                'W': 2,
-                'X': 2,
-                'Y': 2,
-                'Z': 2,
-                'AA': 2,
-                'AB': 2,
-                'AC': 2,
-                'AD': 2,
-                'AE': 2,
-                'AF': 2,
-                'AG': 2,
-                'AH': 2,
-                'AI': 2,
-                'AJ': 2,
-                'AM': 2,
-                'AN': 2,
-                'AO': 2,
-                'AP': 2,
-                'AQ': 2,
-                'AR': 2,
-                'AS': 2,
-                'AT': 2
-            };
-            return H_dist[n];
-        }
-
-
-        // Function to find the shortest path using SMA*
-        function sma_star(start, goal, max_depth = 1000, max_open_size = 40) {
-            var open_set = [{ name: start, g: 0, h: heuristic(start), f: heuristic(start), parent: null }];
-            var closed_set = new Set();
-
-            while (open_set.length > 0) {
-                // Sort open set by f value (ascending)
-                open_set.sort((a, b) => a.f - b.f);
-                var current = open_set.shift();
-
-                if (current.name === goal) {
-                    return backtrackPath(current);
-                }
-
-                if (closed_set.has(current.name)) {
-                    continue;
-                }
-
-                if (!Graph_nodes[current.name]) {
-                    console.error(`Node ${current.name} not found in graph.`);
-                    return null;
-                }
-
-                closed_set.add(current.name);
-
-                for (var [neighbor, weight] of Graph_nodes[current.name]) {
-                    var g = current.g + weight;
-                    var h = heuristic(neighbor);
-                    var f = g + h;
-
-                    var neighbor_node = { name: neighbor, g: g, h: h, f: f, parent: current };
-
-                    // Check if the neighbor is already in the open set with a higher f value
-                    var existingNodeIndex = open_set.findIndex(node => node.name === neighbor && node.f > f);
-                    if (existingNodeIndex !== -1) {
-                        open_set.splice(existingNodeIndex, 1); // Remove the existing node with higher f value
-                    }
-
-                    if (open_set.length >= max_open_size) {
-                        // Remove node with highest f value
-                        open_set.sort((a, b) => b.f - a.f);
-                        open_set.pop();
-                    }
-
-                    open_set.push(neighbor_node);
-                }
-
-                if (closed_set.size > max_depth) {
-                    console.log("Exceeded maximum depth, terminating.");
-                    return null;
-                }
-            }
-
-            console.log("Path does not exist!");
-            return null;
-        }
-
-        // Function to backtrack the path from goal to start
-        function backtrackPath(node) {
-            var path = [];
-            while (node !== null) {
-                path.push(node.name);
-                node = node.parent;
-            }
-            path.reverse();
-            return path;
-        }
-
-        function populateDropdowns() {
-            var startSelect = document.getElementById('startNode');
-            var goalSelect = document.getElementById('goalNode');
-
-            startSelect.innerHTML = '';
-            goalSelect.innerHTML = '';
-
-            // Set untuk menyimpan nama-nama rute yang sudah ditambahkan
-            var addedRoutes = new Set();
-
-
-
-            // Iterate through each route in the JSON data
-            dataGraph.routes.forEach(route => {
-                if (!addedRoutes.has(route.id)) {
-                    // Create an option element for the dropdown
-                    var option = document.createElement('option');
-                    option.value = route.id;
-                    option.textContent = route.name;
-
-                    // Add the option to the start dropdown
-                    startSelect.appendChild(option);
-
-                    // Add the route ID to the set of added routes
-                    addedRoutes.add(route.id);
-                }
-            });
-            startSelect.selectedIndex = -1;
-            goalSelect.selectedIndex = -1;
-        }
-
-        function addNodeMarkers() {
-            dataGraph.routes.forEach(route => {
-                var latLng = [route.lat, route.lng];
-                var marker = L.marker(latLng).addTo(map);
-                marker.bindPopup(route.name);
-            });
-        }
-
-        function addEventListeners() {
-            var startSelect = document.getElementById('startNode');
-            startSelect.addEventListener('change', filterGoalNodeOptions);
-        }
-
-        function filterGoalNodeOptions() {
-            var startSelect = document.getElementById('startNode');
-            var goalSelect = document.getElementById('goalNode');
-
-            // Clear current options in the goalNode dropdown
-            goalSelect.innerHTML = '';
-
-            // Get the selected startNode
-            var selectedStartNodeId = startSelect.value;
-            var selectedStartNode = dataGraph.routes.find(route => route.id === selectedStartNodeId);
-
-            if (selectedStartNode) {
-                var startKoridor = selectedStartNode.koridor;
-
-                // Filter routes that share at least one koridor with the selected startNode
-                dataGraph.routes.forEach(route => {
-                    var hasCommonKoridor = route.koridor.some(k => startKoridor.includes(k));
-                    if (hasCommonKoridor && route.id !== selectedStartNodeId) {
-                        var option = document.createElement('option');
-                        option.value = route.id;
-                        option.textContent = route.name;
-                        goalSelect.appendChild(option);
-                    }
-                });
-            }
-        }
-
-        const koridorColors = {
-            'K1': 'red',
-            'K2': 'blue',
-            'K3': 'green',
-            'K4': 'purple',
-            'K5': 'black',
-            'K6': 'magenta',
-        };
-
-        var pathLayer = null;
-
-        // Function to visualize the shortest path
-        function visualizeShortestPaths(path) {
-            if (path === null || path.length === 0) {
-                console.log("Path does not exist or is empty!");
-                if (pathLayer !== null) {
-                    map.removeLayer(pathLayer); // Remove the current path layer if it exists
-                }
-                return;
-            }
-
-            if (pathLayer !== null) {
-                map.removeLayer(pathLayer); // Remove the current path layer if it exists
-            }
-
-            var routeDetails = []; // Array to store route details for the sidebar
-            var segments = []; // Array to store the segments of the path with their respective colors
-
-            for (let i = 0; i < path.length - 1; i++) {
-                var startNodeId = path[i];
-                var endNodeId = path[i + 1];
-
-                var startNode = dataGraph.routes.find(route => route.id === startNodeId);
-                var endNode = dataGraph.routes.find(route => route.id === endNodeId);
-
-                if (startNode && endNode) {
-                    var latLngs = [[startNode.lat, startNode.lng], [endNode.lat, endNode.lng]];
-
-                    // Determine the color based on the corridor transition
-                    var startCorridor = startNode.koridor[0];
-                    var endCorridor = endNode.koridor[0];
-                    var color;
-
-                    if (startCorridor === endCorridor) {
-                        color = koridorColors[startCorridor] || 'black'; // Same corridor
-                    } else {
-                        color = koridorColors[endCorridor] || 'black'; // Transition to new corridor
-                    }
-
-                    segments.push({ latLngs: latLngs, color: color });
-
-                    // Add start node details to the routeDetails array
-                    if (i === 0) {
-                        routeDetails.push({ id: startNode.id, name: startNode.name, koridor: startNode.koridor.join(", ") });
-                    }
-
-                    // Add end node details to the routeDetails array
-                    routeDetails.push({ id: endNode.id, name: endNode.name, koridor: endNode.koridor.join(", ") });
-                }
-            }
-
-            // Draw each segment with the appropriate color
-            pathLayer = L.layerGroup(segments.map(segment => L.polyline(segment.latLngs, { color: segment.color })));
-
-            // Add the layer group to the map
-            pathLayer.addTo(map);
-
-            map.fitBounds(L.polyline(segments.flatMap(segment => segment.latLngs)).getBounds()); // Fit map to bounds of the path
-
-            // Update Rute Terpendek in the sidebar
-            var nodeInfoDiv = document.getElementById('nodeInfo');
-            nodeInfoDiv.innerHTML = '<strong>Rute Terpendek:</strong>';
-
-            routeDetails.forEach(route => {
-                var routeLabel = document.createElement('div');
-                routeLabel.textContent = `ID: ${route.id}, Name: ${route.name}, Koridor: ${route.koridor}`;
-                nodeInfoDiv.appendChild(routeLabel);
-            });
-        }
-
-        // Function to update map with selected start and goal nodes
-        function findPath() {
-            var startNode = document.getElementById('startNode').value;
-            var goalNode = document.getElementById('goalNode').value;
-            console.log(startNode, goalNode);
-
-            if (startNode === goalNode) {
-                alert("Start node and goal node cannot be the same!");
-                return;
-            }
-
-            if (pathLayer !== null) {
-                map.removeLayer(pathLayer); // Remove the current path layer if it exists
-            }
-
-            var path = sma_star(startNode, goalNode);
-            console.log(path);
-            console.log(path);
-            if (path !== null) {
-                console.log("Path found:", path);
-                visualizeShortestPaths(path);
-            } else {
-                alert("Path not found!");
-                console.log("Path does not exist!");
-                if (pathLayer !== null) {
-                    map.removeLayer(pathLayer); // Remove the current path layer if it exists
-                }
-            }
-        }
-        function populateCorridorLegends() {
-            var legendsContainer = document.getElementById('corridorLegends');
-
-            Object.entries(koridorColors).forEach(([koridor, color]) => {
-                var legendItem = document.createElement('div');
-                legendItem.style.marginBottom = '5px';
-                legendItem.innerHTML = `<span style="display: inline-block; width: 20px; height: 20px; background-color: ${color}; margin-right: 5px;"></span> ${koridor}`;
-                legendsContainer.appendChild(legendItem);
-            });
-        }
-
-        // Call the function to populate legends when the document is ready
-        document.addEventListener('DOMContentLoaded', function () {
-            populateCorridorLegends();
-        });
-        function toggleSidebar() {
-            var sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('open');
-            
-            var toggleBtn = document.querySelector('.toggle-sidebar-btn');
-            toggleBtn.style.display = sidebar.classList.contains('open') ? 'none' : 'block';
-        }
     </script>
+
+    <script src="script.js"></script>
+
 </body>
 
 </html>
