@@ -33,7 +33,7 @@
     <div id="mapid"></div>
 
     <script>
-        
+
         // Function to create markers
         function createMarker(latlng, label) {
             return L.marker(latlng).bindPopup(label);
@@ -166,12 +166,12 @@
 
 
         // Function to find the shortest path using SMA*
-        function sma_star(start, goal, max_depth = 1000) {
+        function sma_star(start, goal, max_depth = 1000, max_open_size = 40) {
             var open_set = [{ name: start, g: 0, h: heuristic(start), f: heuristic(start), parent: null }];
             var closed_set = new Set();
-            var max_open_size = 1000; // Limit size of open set
 
             while (open_set.length > 0) {
+                // Sort open set by f value (ascending)
                 open_set.sort((a, b) => a.f - b.f);
                 var current = open_set.shift();
 
@@ -184,6 +184,7 @@
                 }
 
                 if (!Graph_nodes[current.name]) {
+                    console.error(`Node ${current.name} not found in graph.`);
                     return null;
                 }
 
@@ -196,7 +197,14 @@
 
                     var neighbor_node = { name: neighbor, g: g, h: h, f: f, parent: current };
 
+                    // Check if the neighbor is already in the open set with a higher f value
+                    var existingNodeIndex = open_set.findIndex(node => node.name === neighbor && node.f > f);
+                    if (existingNodeIndex !== -1) {
+                        open_set.splice(existingNodeIndex, 1); // Remove the existing node with higher f value
+                    }
+
                     if (open_set.length >= max_open_size) {
+                        // Remove node with highest f value
                         open_set.sort((a, b) => b.f - a.f);
                         open_set.pop();
                     }
@@ -209,7 +217,6 @@
                     return null;
                 }
             }
-
 
             console.log("Path does not exist!");
             return null;

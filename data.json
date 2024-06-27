@@ -66,8 +66,8 @@
     {
       "id": "J",
       "name": "Sub Terminal Kerten",
-      "lat": -7.560134,
-      "lng": 110.8191,
+      "lat": -7.56057,
+      "lng": 110.78988,
       "koridor": ["K2"]
     },
     {
@@ -164,8 +164,8 @@
     {
       "id": "X",
       "name": "Tugu Cembengan",
-      "lat": -7.57231,
-      "lng": 110.8198,
+      "lat": -7.55777,
+      "lng": 110.84755,
       "koridor": ["K3"]
     },
     {
@@ -241,8 +241,8 @@
     {
       "id": "AI",
       "name": "Sub Terminal Semanggi",
-      "lat": -7.5866,
-      "lng": 110.8588,
+      "lat": -7.5896,
+      "lng": 110.83503,
       "koridor": ["K5"]
     },
     {
