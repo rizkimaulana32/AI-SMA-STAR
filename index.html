@@ -33,6 +33,7 @@
     <div id="mapid"></div>
 
     <script>
+        
         // Function to create markers
         function createMarker(latlng, label) {
             return L.marker(latlng).bindPopup(label);
@@ -229,8 +230,13 @@
             var startSelect = document.getElementById('startNode');
             var goalSelect = document.getElementById('goalNode');
 
+            startSelect.innerHTML = '';
+            goalSelect.innerHTML = '';
+
             // Set untuk menyimpan nama-nama rute yang sudah ditambahkan
             var addedRoutes = new Set();
+
+
 
             // Iterate through each route in the JSON data
             dataGraph.routes.forEach(route => {
@@ -247,6 +253,8 @@
                     addedRoutes.add(route.id);
                 }
             });
+            startSelect.selectedIndex = -1;
+            goalSelect.selectedIndex = -1;
         }
 
         function addNodeMarkers() {
