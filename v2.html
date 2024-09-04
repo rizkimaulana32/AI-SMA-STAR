@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMA* BST Route Finder</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- Sidebar Toggle Button (Hamburger) -->
+    <button id="sidebar-toggle" class="fixed z-20 bg-transparent border-none cursor-pointer top-5 right-5"
+        onclick="toggleSidebar()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8">
+            <path d="M3 5h18v2H3V5zM3 11h18v2H3v-2zM3 17h18v2H3v-2z" />
+        </svg>
+    </button>
+
+    <!-- Sidebar -->
+    <div
+        class="fixed top-0 right-0 z-50 w-64 h-full overflow-y-auto transition-transform transform translate-x-full bg-white shadow-md sidebar md:w-80">
+        <!-- Close Button -->
+        <div class="flex justify-end px-4 pt-4">
+            <button id="sidebar-close" onclick="toggleSidebar()"
+                class="text-gray-600 focus:outline-none hover:text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6">
+                    <path
+                        d="M19.707 4.293a1 1 0 0 0-1.414 0L12 10.586 5.707 4.293a1 1 0 0 0-1.414 1.414L10.586 12 4.293 18.293a1 1 0 1 0 1.414 1.414L12 13.414l6.293 6.293a1 1 0 0 0 1.414-1.414L13.414 12l6.293-6.293a1 1 0 0 0 0-1.414z" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Sidebar Content -->
+        <div class="px-4">
+            <h3 class="mt-4 mb-4 text-lg font-semibold text-gray-900">Select Start and Goal Nodes</h3>
+
+            <!-- Start Node Dropdown -->
+            <div class="mb-4">
+                <label for="startNode" class="block text-sm font-medium text-gray-900">Start Node:</label>
+                <select id="startNode"
+                    class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+                    <option selected>Choose a node</option>
+                    <!-- Dynamically populated options will be added here -->
+                </select>
+            </div>
+
+            <!-- Goal Node Dropdown -->
+            <div class="mb-4">
+                <label for="goalNode" class="block text-sm font-medium text-gray-900">Goal Node:</label>
+                <select id="goalNode"
+                    class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+                    <option selected>Choose a node</option>
+                    <!-- Dynamically populated options will be added here -->
+                </select>
+            </div>
+
+            <!-- Find Path Button -->
+            <button onclick="findPath()"
+                class="w-full p-2 text-white rounded-lg bg-emerald-500 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50">
+                Find Path
+            </button>
+
+            <!-- Node Info Section -->
+            <div class="mt-6" id="allRoutes">
+                <strong class="block mb-2 text-sm font-medium text-gray-900">Semua Rute:</strong>
+                <!-- Content dynamically updated based on selection -->
+            </div>
+
+            <!-- Node Info Section -->
+            <div class="mt-6" id="nodeInfo">
+                <strong class="block mb-2 text-sm font-medium text-gray-900">Rute Terpendek:</strong>
+                <!-- Content dynamically updated based on selection -->
+            </div>
+
+            <!-- Corridor Legends Section -->
+            <div class="py-4 mt-6 border-t border-gray-300">
+                <h3 class="mb-4 font-semibold text-gray-900 text-md">Corridor Legends</h3>
+                <div id="corridorLegends" class="legends">
+                    <!-- Color-coded legends will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Container -->
+    <div id="mapid" class="z-0 w-screen h-screen">
+
+
+    </div>
+
+    <!-- JavaScript for Sidebar Toggle -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('translate-x-full');
+            sidebar.classList.toggle('translate-x-0');
+        }
+
+        // Toggle visibility of close button
+        const toggleButton = document.querySelector('#sidebar-toggle');
+        toggleButton.addEventListener('click', function () {
+            toggleButton.classList.add("hidden");
+            closeButton.classList.remove("hidden");
+        })
+
+        const closeButton = document.querySelector('#sidebar-close');
+        closeButton.addEventListener('click', function () {
+            closeButton.classList.add("hidden");
+            toggleButton.classList.remove("hidden");
+        })
+
+    </script>
+
+    <script src="scriptv2.js"></script>
+</body>
+
+</html>

@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-100">
 
     <!-- Sidebar Toggle Button (Hamburger) -->
-    <button id="sidebar-toggle" class="fixed top-5 right-5 bg-transparent border-none cursor-pointer z-20"
+    <button id="sidebar-toggle" class="fixed z-20 bg-transparent border-none cursor-pointer top-10 right-10"
         onclick="toggleSidebar()">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8">
             <path d="M3 5h18v2H3V5zM3 11h18v2H3v-2zM3 17h18v2H3v-2z" />
@@ -23,7 +23,7 @@
 
     <!-- Sidebar -->
     <div
-        class="sidebar fixed top-0 right-0 h-full bg-white md:w-80 w-64 shadow-md transform translate-x-full transition-transform z-50 overflow-y-auto">
+        class="fixed top-0 right-0 z-50 w-64 h-full overflow-y-auto transition-transform transform translate-x-full bg-white shadow-md sidebar md:w-80">
         <!-- Close Button -->
         <div class="flex justify-end px-4 pt-4">
             <button id="sidebar-close" onclick="toggleSidebar()"
@@ -61,7 +61,7 @@
 
             <!-- Find Path Button -->
             <button onclick="findPath()"
-                class="w-full p-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50">
+                class="w-full p-2 text-white bg-green-500 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
                 Find Path
             </button>
 
@@ -72,8 +72,8 @@
             </div>
 
             <!-- Corridor Legends Section -->
-            <div class="mt-6 border-t border-gray-300 py-4">
-                <h3 class="mb-4 text-md font-semibold text-gray-900">Corridor Legends</h3>
+            <div class="py-4 mt-8 border-t border-gray-300">
+                <h3 class="mb-4 font-semibold text-gray-900 text-md">Corridor Legends</h3>
                 <div id="corridorLegends" class="legends">
                     <!-- Color-coded legends will be added here -->
                 </div>
@@ -82,7 +82,7 @@
     </div>
 
     <!-- Map Container -->
-    <div id="mapid" class="h-screen w-screen z-0">
+    <div id="mapid" class="z-0 w-screen h-screen">
 
 
     </div>
@@ -108,9 +108,10 @@
             toggleButton.classList.remove("hidden");
         })
 
+
     </script>
 
-    <script src="script.js"></script>
+    <script src="scriptv1.js"></script>
 
 </body>
 
